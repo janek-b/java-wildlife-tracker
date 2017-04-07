@@ -55,4 +55,34 @@ public class Species {
     }
   }
 
+  public void save() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO species (name, classification, habitat, endangered) VALUES (:name, :classification, :habitat, :endangered);";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("name", this.name)
+        .addParameter("classification", this.classification)
+        .addParameter("habitat", this.habitat)
+        .addParameter("endangered", this.endangered)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+
+  public static List<Species> all() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM species;";
+      return con.createQuery(sql)
+        .executeAndFetch(Species.class);
+    }
+  }
+
+  public static Species find(int id) {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM species WHERE id = :id;";
+      return con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Species.class);
+    }
+  }
+
 }

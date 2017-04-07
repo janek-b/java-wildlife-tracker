@@ -51,4 +51,31 @@ public class SpeciesTest {
     assertTrue(firstSpecies.equals(anotherSpecies));
   }
 
+  @Test
+  public void save_assignsIdToObjectAndSavesObjectToDatabase() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    Species savedSpecies = Species.all().get(0);
+    assertEquals(testSpecies.getId(), savedSpecies.getId());
+  }
+
+  @Test
+  public void all_returnsAllInstancesOfSpecies_false() {
+    Species firstSpecies = new Species("Deer", "Mammal", "Forest", false);
+    firstSpecies.save();
+    Species secondSpecies = new Species("Black Bear", "Mammal", "Forest", false);
+    secondSpecies.save();
+    assertEquals(true, Species.all().get(0).equals(firstSpecies));
+    assertEquals(true, Species.all().get(1).equals(secondSpecies));
+  }
+
+  @Test
+  public void find_returnsSpeciesWithSameId_secondSpecies() {
+    Species firstSpecies = new Species("Deer", "Mammal", "Forest", false);
+    firstSpecies.save();
+    Species secondSpecies = new Species("Black Bear", "Mammal", "Forest", false);
+    secondSpecies.save();
+    assertEquals(Species.find(secondSpecies.getId()), secondSpecies);
+  }
+
 }
