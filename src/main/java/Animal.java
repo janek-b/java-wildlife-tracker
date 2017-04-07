@@ -82,16 +82,15 @@ public class Animal {
     }
   }
 
-  // public static Animal find(int id) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT * FROM animals WHERE id=:id;";
-  //     Animal animal = con.createQuery(sql)
-  //       .addParameter("id", id)
-  //       .executeAndFetchFirst(Animal.class);
-  //     return animal;
-  //   }
-  // }
-  //
+  public static Animal find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM animals WHERE id=:id;";
+      return con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Animal.class);
+    }
+  }
+
   // public void updateName(String name) {
   //   try(Connection con = DB.sql2o.open()) {
   //     String sql = "UPDATE animals SET name=:name WHERE id=:id;";
