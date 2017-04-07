@@ -16,11 +16,14 @@ public class Sighting {
     this.speciesId = speciesId;
     this.location = location;
     this.userId = userId;
-    this.id = id;
   }
 
   public int getId() {
     return this.id;
+  }
+
+  public Timestamp getTime() {
+    return this.time;
   }
 
   public int getSpeciesId() {
@@ -35,15 +38,19 @@ public class Sighting {
     return this.userId;
   }
 
-  // @Override
-  // public boolean equals(Object otherSighting) {
-  //   if(!(otherSighting instanceof Sighting)) {
-  //     return false;
-  //   } else {
-  //     Sighting newSighting = (Sighting) otherSighting;
-  //     return this.getAnimalId() == (newSighting.getAnimalId()) && this.getLocation().equals(newSighting.getLocation()) && this.getRangerName().equals(newSighting.getRangerName());
-  //   }
-  // }
+  @Override
+  public boolean equals(Object otherSighting) {
+    if(!(otherSighting instanceof Sighting)) {
+      return false;
+    } else {
+      Sighting newSighting = (Sighting) otherSighting;
+      return this.getSpeciesId() == (newSighting.getSpeciesId()) &&
+             this.getLocation().equals(newSighting.getLocation()) &&
+             this.getTime() == newSighting.getTime() &&
+             this.getUserId() == newSighting.getUserId() &&
+             this.getId() == newSighting.getId();
+    }
+  }
 
   // public void save() {
   //   try(Connection con = DB.sql2o.open()) {

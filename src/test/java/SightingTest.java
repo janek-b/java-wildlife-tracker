@@ -27,24 +27,32 @@ public class SightingTest {
     Sighting testSighting = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
     assertEquals(testSpecies.getId(), testSighting.getSpeciesId());
   }
+
   @Test
   public void getLocation_returnsTheLocationOfTheSighting() {
-
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    Sighting testSighting = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
+    assertEquals("45.472428, -121.946466", testSighting.getLocation());
   }
+
   @Test
   public void getUserId_returnsUserIdOfTheSighting() {
-
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    Sighting testSighting = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
+    assertEquals(1, testSighting.getUserId());
   }
 
-  // @Test
-  // public void equals_returnsTrueIfLocationAndDescriptionAreSame_true() {
-  //   Animal testAnimal = new Animal("Deer");
-  //   testAnimal.save();
-  //   Sighting testSighting = new Sighting(testAnimal.getId(), "45.472428, -121.946466", "Ranger Avery");
-  //   Sighting anotherSighting = new Sighting(testAnimal.getId(), "45.472428, -121.946466", "Ranger Avery");
-  //   assertTrue(testSighting.equals(anotherSighting));
-  // }
-  //
+  @Test
+  public void equals_returnsTrueIfLocationAndDescriptionAreSame_true() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    Sighting testSighting = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
+    Sighting anotherSighting = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
+    assertTrue(testSighting.equals(anotherSighting));
+  }
+
   // @Test
   // public void save_insertsObjectIntoDatabase_Sighting() {
   //   Animal testAnimal = new Animal("Deer");
