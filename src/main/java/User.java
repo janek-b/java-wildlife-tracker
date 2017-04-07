@@ -52,4 +52,13 @@ public class User {
     }
   }
 
+  public static User find(int id) {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM users WHERE id = :id;";
+      return con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(User.class);
+    }
+  }
+
 }

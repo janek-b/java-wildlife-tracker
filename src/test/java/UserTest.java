@@ -51,15 +51,15 @@ public class UserTest {
     assertEquals(true, User.all().get(1).equals(secondUser));
   }
 
-  // @Test
-  // public void find_returnsUserWithSameId_secondUser() {
-  //   User firstUser = new User("Ranger Avery");
-  //   firstUser.save();
-  //   User secondUser = new User("Ranger Jeff");
-  //   secondUser.save();
-  //   assertEquals(User.find(secondUser.getId()), secondUser);
-  // }
-  //
+  @Test
+  public void find_returnsUserWithSameId_secondUser() {
+    User firstUser = new User("Ranger Avery");
+    firstUser.save();
+    User secondUser = new User("Ranger Jeff");
+    secondUser.save();
+    assertEquals(User.find(secondUser.getId()), secondUser);
+  }
+
   // @Test
   // public void delete_deletesUserFromDatabase_0() {
   //   User testUser = new User("Ranger Avery");
