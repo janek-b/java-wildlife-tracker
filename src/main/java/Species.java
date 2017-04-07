@@ -25,4 +25,16 @@ public class Species {
     return this.name;
   }
 
+  public String getClassification() {
+    return this.classification;
+  }
+
+  public String getHabitat() {
+    return this.habitat;
+  }
+
+  public boolean getEndangered() {
+    return this.endangered;
+  }
+
 }

@@ -26,4 +26,22 @@ public class SpeciesTest {
     assertEquals("Deer", testSpecies.getName());
   }
 
+  @Test
+  public void getClassification_SpeciesInstantiatesWithClassification_Mammal() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    assertEquals("Mammal", testSpecies.getClassification());
+  }
+
+  @Test
+  public void getHabitat_SpeciesInstantiatesWithHabitat_Forest() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    assertEquals("Forest", testSpecies.getHabitat());
+  }
+
+  @Test
+  public void getEndangered_SpeciesInstantiatesWithEndangered_false() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    assertEquals(false, testSpecies.getEndangered());
+  }
+
 }
