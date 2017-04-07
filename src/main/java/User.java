@@ -9,10 +9,11 @@ import java.sql.Timestamp;
 
 public class User {
   private int id;
+  private String email;
   private String name;
 
-  public User(String name) {
-    this.name = name;
+  public User(String email) {
+    this.email = email;
   }
 
   public String getName() {
@@ -23,22 +24,30 @@ public class User {
     return this.id;
   }
 
+  public String getEmail() {
+    return this.email;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
   @Override
   public boolean equals(Object otherUser) {
     if (!(otherUser instanceof User)) {
       return false;
     } else {
       User newUser = (User) otherUser;
-      return this.getName().equals(newUser.getName()) &&
+      return this.getEmail().equals(newUser.getEmail()) &&
              this.getId() == newUser.getId();
     }
   }
 
   public void save() {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO users (name) VALUES (:name);";
+      String sql = "INSERT INTO users (email) VALUES (:email);";
       this.id = (int) con.createQuery(sql, true)
-        .addParameter("name", this.name)
+        .addParameter("email", this.email)
         .executeUpdate()
         .getKey();
     }
@@ -70,13 +79,27 @@ public class User {
     }
   }
 
-  public void update(String name) {
+  public void update(String email, String name) {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE users SET name = :name WHERE id = :id;";
+      String sql = "UPDATE users SET (email, name) = (:email, :name) WHERE id = :id;";
       con.createQuery(sql)
+        .addParameter("email", email)
         .addParameter("name", name)
         .addParameter("id", this.id)
         .executeUpdate();
+    }
+  }
+
+  public static User findByEmail(String email) {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM users WHERE email = :email;";
+      User user = con.createQuery(sql)
+        .addParameter("email", email)
+        .executeAndFetchFirst(User.class);
+      if (user == null) {
+        throw new IllegalArgumentException("No user with that email.");
+      }
+      return user;
     }
   }
 

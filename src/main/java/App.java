@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 import static spark.Spark.*;
+import java.text.DateFormat;
 
 public class App {
   public static void main(String[] args) {
@@ -15,10 +16,34 @@ public class App {
 
     get("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      model.put("species", Species.all());
+      model.put("user", request.session().attribute("user"));
+      model.put("sightings", Sighting.all());
+      model.put("formatter", DateFormat.getDateTimeInstance());
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
+    // post("/login", (request, response) -> {
+    //   Map<String, Object> model = new HashMap<String, Object>();
+    //   String email = request.queryParams("email");
+    //   User user;
+    //   try {
+    //     user = User.findByEmail(email);
+    //   } catch (IllegalArgumentException exception) {
+    //     user = new User(email);
+    //     user.save();
+    //   }
+    //   request.session().attribute("user", user);
+    //   response.redirect(request.headers("Referer"));
+    //   return new ModelAndView(model, layout);
+    // }, new VelocityTemplateEngine());
+    //
+    // get("/logout", (request, response) -> {
+    //   Map<String, Object> model = new HashMap<String, Object>();
+    //   request.session().removeAttribute("user");
+    //   response.redirect(request.headers("Referer"));
+    //   return new ModelAndView(model, layout);
+    // }, new VelocityTemplateEngine());
 
     // post("/endangered_sighting", (request, response) -> {
     //   Map<String, Object> model = new HashMap<String, Object>();

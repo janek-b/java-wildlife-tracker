@@ -16,26 +16,34 @@ public class UserTest {
 
   @Test
   public void user_instantiatesCorrectly_false() {
-    User testUser = new User("Ranger Avery");
+    User testUser = new User("avery@ranger.com");
     assertEquals(true, testUser instanceof User);
   }
 
   @Test
-  public void getName_UserInstantiatesWithName_Deer() {
-    User testUser = new User("Ranger Avery");
-    assertEquals("Ranger Avery", testUser.getName());
+  public void getEmail_UserInstantiatesWithName() {
+    User testUser = new User("avery@ranger.com");
+    assertEquals("avery@ranger.com", testUser.getEmail());
+  }
+
+  @Test
+  public void getName_UserInstantiatesWithName() {
+    User testUser = new User("avery@ranger.com");
+    testUser.save();
+    testUser.update("avery@ranger.com", "Ranger Avery");
+    assertEquals("Ranger Avery", User.find(testUser.getId()).getName());
   }
 
   @Test
   public void equals_returnsTrueIfPropertiesAreTheSame_true() {
-    User firstUser = new User("Ranger Avery");
-    User anotherUser = new User("Ranger Avery");
+    User firstUser = new User("avery@ranger.com");
+    User anotherUser = new User("avery@ranger.com");
     assertTrue(firstUser.equals(anotherUser));
   }
 
   @Test
   public void save_assignsIdToObjectAndSavesObjectToDatabase() {
-    User testUser = new User("Ranger Avery");
+    User testUser = new User("avery@ranger.com");
     testUser.save();
     User savedUser = User.all().get(0);
     assertEquals(testUser.getId(), savedUser.getId());
@@ -43,9 +51,9 @@ public class UserTest {
 
   @Test
   public void all_returnsAllInstancesOfUser_false() {
-    User firstUser = new User("Ranger Avery");
+    User firstUser = new User("avery@ranger.com");
     firstUser.save();
-    User secondUser = new User("Ranger Jeff");
+    User secondUser = new User("jeff@ranger.com");
     secondUser.save();
     assertEquals(true, User.all().get(0).equals(firstUser));
     assertEquals(true, User.all().get(1).equals(secondUser));
@@ -53,30 +61,31 @@ public class UserTest {
 
   @Test
   public void find_returnsUserWithSameId_secondUser() {
-    User firstUser = new User("Ranger Avery");
+    User firstUser = new User("avery@ranger.com");
     firstUser.save();
-    User secondUser = new User("Ranger Jeff");
+    User secondUser = new User("jeff@ranger.com");
     secondUser.save();
     assertEquals(User.find(secondUser.getId()), secondUser);
   }
 
   @Test
   public void delete_deletesUserFromDatabase_0() {
-    User testUser = new User("Ranger Avery");
+    User testUser = new User("avery@ranger.com");
     testUser.save();
     testUser.delete();
     assertEquals(0, User.all().size());
   }
 
   public void update_updatesUserPropertiesInDatabase_String() {
-    User testUser = new User("Ranger Avery");
+    User testUser = new User("avery@ranger.com");
     testUser.save();
-    testUser.update("Ranger Jeff");
-    assertEquals("Ranger Jeff", testUser.getName());
+    testUser.update("jeff@ranger.com", "Ranger Jeff");
+    assertEquals("jeff@ranger.com", User.find(testUser.getId()).getEmail());
+    assertEquals("Ranger Jeff", User.find(testUser.getId()).getName());
   }
 
   public void getSightings_returnsAllSightingsByAUser() {
-    User testUser = new User("Ranger Avery");
+    User testUser = new User("avery@ranger.com");
     testUser.save();
     Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
     testSpecies.save();
