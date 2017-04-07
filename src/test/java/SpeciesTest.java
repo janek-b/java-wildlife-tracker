@@ -22,7 +22,7 @@ public class SpeciesTest {
 
   @Test
   public void getName_SpeciesInstantiatesWithName_Deer() {
-    Species testSpecies = new Species("Deer");
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
     assertEquals("Deer", testSpecies.getName());
   }
 
