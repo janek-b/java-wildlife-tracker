@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.text.DateFormat;
 
 public class Sighting {
   private int speciesId;
@@ -46,7 +47,7 @@ public class Sighting {
       Sighting newSighting = (Sighting) otherSighting;
       return this.getSpeciesId() == newSighting.getSpeciesId() &&
              this.getLocation().equals(newSighting.getLocation()) &&
-            //  this.getTime() == newSighting.getTime() &&
+            //  DateFormat.getDateTimeInstance().format(this.getTime()).equals(DateFormat.getDateTimeInstance().format(newSighting.getTime())) &&
              this.getUserId() == newSighting.getUserId() &&
              this.getId() == newSighting.getId();
     }
