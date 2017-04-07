@@ -60,19 +60,19 @@ public class UserTest {
     assertEquals(User.find(secondUser.getId()), secondUser);
   }
 
-  // @Test
-  // public void delete_deletesUserFromDatabase_0() {
-  //   User testUser = new User("Ranger Avery");
-  //   testUser.save();
-  //   testUser.delete();
-  //   assertEquals(0, User.all().size());
-  // }
-  //
-  // public void update_updatesUserPropertiesInDatabase_String() {
-  //   User testUser = new User("Ranger Avery");
-  //   testUser.save();
-  //   testUser.update("Ranger Jeff");
-  //   assertEquals("Ranger Jeff", testUser.getName());
-  // }
+  @Test
+  public void delete_deletesUserFromDatabase_0() {
+    User testUser = new User("Ranger Avery");
+    testUser.save();
+    testUser.delete();
+    assertEquals(0, User.all().size());
+  }
+
+  public void update_updatesUserPropertiesInDatabase_String() {
+    User testUser = new User("Ranger Avery");
+    testUser.save();
+    testUser.update("Ranger Jeff");
+    assertEquals("Ranger Jeff", testUser.getName());
+  }
 
 }
