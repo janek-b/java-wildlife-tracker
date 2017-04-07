@@ -91,25 +91,27 @@ public class Animal {
     }
   }
 
-  // public void updateName(String name) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "UPDATE animals SET name=:name WHERE id=:id;";
-  //     con.createQuery(sql)
-  //       .addParameter("id", id)
-  //       .addParameter("name", name)
-  //       .executeUpdate();
-  //   }
-  // }
-  //
-  // public void delete() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "DELETE FROM animals WHERE id=:id;";
-  //     con.createQuery(sql)
-  //       .addParameter("id", id)
-  //       .executeUpdate();
-  //   }
-  // }
-  //
+  public void update(String health, String age, String identifier) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE animals SET (health, age, identifier) = (:health, :age, :identifier) WHERE id=:id;";
+      con.createQuery(sql)
+        .addParameter("id", this.id)
+        .addParameter("health", health)
+        .addParameter("age", age)
+        .addParameter("identifier", identifier)
+        .executeUpdate();
+    }
+  }
+
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM animals WHERE id=:id;";
+      con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
   // public List<Sighting> getSightings() {
   //   try(Connection con = DB.sql2o.open()) {
   //     String sql = "SELECT * FROM sightings WHERE animal_id=:id;";

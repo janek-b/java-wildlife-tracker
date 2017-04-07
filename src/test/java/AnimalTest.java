@@ -74,21 +74,23 @@ public class AnimalTest {
     assertEquals(Animal.find(secondAnimal.getId()), secondAnimal);
   }
 
-  // @Test
-  // public void delete_deletesAnimalFromDatabase_0() {
-  //   Animal testAnimal = new Animal(1);
-  //   testAnimal.save();
-  //   testAnimal.delete();
-  //   assertEquals(0, Animal.all().size());
-  // }
-  //
-  // public void updateName_updatesAnimalNameInDatabase_String() {
-  //   Animal testAnimal = new Animal(1);
-  //   testAnimal.save();
-  //   testAnimal.updateName(2);
-  //   assertEquals(2, testAnimal.getName());
-  // }
-  //
+  @Test
+  public void delete_deletesAnimalFromDatabase_0() {
+    Animal testAnimal = new Animal(1, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
+    testAnimal.save();
+    testAnimal.delete();
+    assertEquals(0, Animal.all().size());
+  }
+
+  public void updateName_updatesAnimalNameInDatabase_String() {
+    Animal testAnimal = new Animal(1, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
+    testAnimal.save();
+    testAnimal.update(Animal.Health.ILL.toString(), Animal.Age.YOUNG.toString(), "Scar on leg");
+    assertEquals("ILL", Animal.find(testAnimal.getId()).getHealth());
+    assertEquals("YOUNG", Animal.find(testAnimal.getId()).getAge());
+    assertEquals("Scar on leg", Animal.find(testAnimal.getId()).getIdentifier());
+  }
+
   // @Test
   // public void find_returnsNullWhenNoAnimalFound_null() {
   //   assertTrue(Animal.find(999) == null);
