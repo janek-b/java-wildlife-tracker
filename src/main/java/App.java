@@ -49,7 +49,7 @@ public class App {
     get("/admin", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("user", request.session().attribute("user"));
-      model.put("species", Species.all());
+      model.put("species", Species.AnimalGroups.values());
       model.put("template", "templates/admin.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
