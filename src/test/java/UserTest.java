@@ -26,13 +26,13 @@ public class UserTest {
     assertEquals("Ranger Avery", testUser.getName());
   }
 
-  // @Test
-  // public void equals_returnsTrueIfPropertiesAreTheSame_true() {
-  //   User firstUser = new User("Ranger Avery");
-  //   User anotherUser = new User("Ranger Avery");
-  //   assertTrue(firstUser.equals(anotherUser));
-  // }
-  //
+  @Test
+  public void equals_returnsTrueIfPropertiesAreTheSame_true() {
+    User firstUser = new User("Ranger Avery");
+    User anotherUser = new User("Ranger Avery");
+    assertTrue(firstUser.equals(anotherUser));
+  }
+
   // @Test
   // public void save_assignsIdToObjectAndSavesObjectToDatabase() {
   //   User testUser = new User("Ranger Avery");

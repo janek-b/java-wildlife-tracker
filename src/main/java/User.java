@@ -19,4 +19,19 @@ public class User {
     return this.name;
   }
 
+  public int getId() {
+    return this.id;
+  }
+
+  @Override
+  public boolean equals(Object otherUser) {
+    if (!(otherUser instanceof User)) {
+      return false;
+    } else {
+      User newUser = (User) otherUser;
+      return this.getName().equals(newUser.getName()) &&
+             this.getId() == newUser.getId();
+    }
+  }
+
 }
