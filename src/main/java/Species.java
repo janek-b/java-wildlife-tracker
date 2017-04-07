@@ -8,6 +8,16 @@ import java.util.TimerTask;
 import java.sql.Timestamp;
 
 public class Species {
+  public enum AnimalGroups {
+    MAMMALS,
+    BIRDS,
+    REPTILES,
+    FISH,
+    AMPHIBIANS,
+    INSECTS,
+    ARACHNIDS;
+  }
+  
   private int id;
   private String name;
   private String classification;

@@ -71,6 +71,14 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/species", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("user", request.session().attribute("user"));
+      model.put("species", Species.all());
+      model.put("template", "templates/species.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     post("/species/new", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       String speciesName = request.queryParams("speciesName");
