@@ -80,4 +80,13 @@ public class User {
     }
   }
 
+  public List<Sighting> getSightings() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM sightings WHERE userId = :id;";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetch(Sighting.class);
+    }
+  }
+
 }

@@ -75,4 +75,22 @@ public class UserTest {
     assertEquals("Ranger Jeff", testUser.getName());
   }
 
+  public void getSightings_returnsAllSightingsByAUser() {
+    User testUser = new User("Ranger Avery");
+    testUser.save();
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    Sighting testSighting = new Sighting(testSpecies.getId(), "45.472428, -121.946466", testUser.getId());
+    testSighting.save();
+    Species secondSpecies = new Species("Black Bear", "Mammal", "Forest", false);
+    secondSpecies.save();
+    Sighting secondTestSighting = new Sighting (secondSpecies.getId(), "45.472428, -121.946466", testUser.getId());
+    secondTestSighting.save();
+    Sighting thirdTestSighting = new Sighting (secondSpecies.getId(), "45.472428, -121.946466", 1);
+    thirdTestSighting.save();
+    Sighting[] sightings = new Sighting[] {testSighting, secondTestSighting};
+    assertTrue(testUser.getSightings().containsAll(Arrays.asList(sightings)));
+    assertFalse(testUser.getSightings().contains(thirdTestSighting));
+  }
+
 }
