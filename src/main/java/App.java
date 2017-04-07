@@ -18,32 +18,70 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("user", request.session().attribute("user"));
       model.put("sightings", Sighting.all());
+      model.put("species", Species.all());
       model.put("formatter", DateFormat.getDateTimeInstance());
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    // post("/login", (request, response) -> {
-    //   Map<String, Object> model = new HashMap<String, Object>();
-    //   String email = request.queryParams("email");
-    //   User user;
-    //   try {
-    //     user = User.findByEmail(email);
-    //   } catch (IllegalArgumentException exception) {
-    //     user = new User(email);
-    //     user.save();
-    //   }
-    //   request.session().attribute("user", user);
-    //   response.redirect(request.headers("Referer"));
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
-    //
-    // get("/logout", (request, response) -> {
-    //   Map<String, Object> model = new HashMap<String, Object>();
-    //   request.session().removeAttribute("user");
-    //   response.redirect(request.headers("Referer"));
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
+    post("/login", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      String email = request.queryParams("email");
+      User user;
+      try {
+        user = User.findByEmail(email);
+      } catch (IllegalArgumentException exception) {
+        user = new User(email);
+        user.save();
+      }
+      request.session().attribute("user", user);
+      response.redirect(request.headers("Referer"));
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/logout", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      request.session().removeAttribute("user");
+      response.redirect(request.headers("Referer"));
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/admin", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("user", request.session().attribute("user"));
+      model.put("species", Species.all());
+      model.put("template", "templates/admin.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+
+    post("/users/:id/sightings/new", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      User reportingUser = User.find(Integer.parseInt(request.params(":id")));
+      User loggedInUser = request.session().attribute("user");
+      if (reportingUser.equals(loggedInUser)) {
+        int species = Integer.parseInt(request.queryParams("species"));
+        String location = request.queryParams("location");
+        Sighting newSighting = new Sighting(species, location, reportingUser.getId());
+        newSighting.save();
+        response.redirect(request.headers("Referer"));
+      } else {
+        response.redirect("/");
+      }
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/species/new", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      String speciesName = request.queryParams("speciesName");
+      String classification = request.queryParams("classification");
+      String habitat = request.queryParams("habitat");
+      boolean endangered = (request.queryParamsValues("endangered") != null);
+      Species newSpecies = new Species(speciesName, classification, habitat, endangered);
+      newSpecies.save();
+      response.redirect(request.headers("Referer"));
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
     // post("/endangered_sighting", (request, response) -> {
     //   Map<String, Object> model = new HashMap<String, Object>();

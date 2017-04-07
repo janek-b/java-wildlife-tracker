@@ -20,9 +20,29 @@
           <li><a href="/species">Local Wildlife</a></li>
           <li><a href="/sightings">Wildlife Sightings</a></li>
           #if($user)
-            <li><a href="/user/$user.getId()/sightings/new">Report a sighting</a></li>
+            <li><button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#sightingModal">Report a sighting</button></li>
           #end
         </ul>
+        #if($user.getName())
+          <p class="navbar-text navbar-right">Signed in as <a href="/users/$user.getId()">$user.getName()</a></p><a href="/logout" type="button" class="btn btn-default navbar-btn navbar-right">Sign out</a>
+        #elseif($user)
+          <p class="navbar-text navbar-right">Signed in with <a href="/users/$user.getId()">$user.getEmail()</a></p><a href="/logout" type="button" class="btn btn-default navbar-btn navbar-right">Sign out</a>
+        #else
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <button class="btn btn-default navbar-btn" id="loginLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></button>
+            <form id="loginForm" class="dropdown-menu" aria-labelledby="loginLabel" action="/login" method="post">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" name="email" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-block btn-success">Login</button>
+              </div>
+            </form>
+          </li>
+        </ul>
+        #end
 
         <form class="navbar-form navbar-right" action="/search">
           <div class="form-group">

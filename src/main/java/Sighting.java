@@ -39,6 +39,15 @@ public class Sighting {
     return this.userId;
   }
 
+  public String getSpeciesName() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT name FROM species WHERE id = :speciesId;";
+      return con.createQuery(sql)
+        .addParameter("speciesId", this.speciesId)
+        .executeAndFetchFirst(String.class);
+    }
+  }
+
   @Override
   public boolean equals(Object otherSighting) {
     if(!(otherSighting instanceof Sighting)) {
