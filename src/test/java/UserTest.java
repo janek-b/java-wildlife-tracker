@@ -33,24 +33,24 @@ public class UserTest {
     assertTrue(firstUser.equals(anotherUser));
   }
 
-  // @Test
-  // public void save_assignsIdToObjectAndSavesObjectToDatabase() {
-  //   User testUser = new User("Ranger Avery");
-  //   testUser.save();
-  //   User savedUser = User.all().get(0);
-  //   assertEquals(testUser.getId(), savedUser.getId());
-  // }
-  //
-  // @Test
-  // public void all_returnsAllInstancesOfUser_false() {
-  //   User firstUser = new User("Ranger Avery");
-  //   firstUser.save();
-  //   User secondUser = new User("Ranger Jeff");
-  //   secondUser.save();
-  //   assertEquals(true, User.all().get(0).equals(firstUser));
-  //   assertEquals(true, User.all().get(1).equals(secondUser));
-  // }
-  //
+  @Test
+  public void save_assignsIdToObjectAndSavesObjectToDatabase() {
+    User testUser = new User("Ranger Avery");
+    testUser.save();
+    User savedUser = User.all().get(0);
+    assertEquals(testUser.getId(), savedUser.getId());
+  }
+
+  @Test
+  public void all_returnsAllInstancesOfUser_false() {
+    User firstUser = new User("Ranger Avery");
+    firstUser.save();
+    User secondUser = new User("Ranger Jeff");
+    secondUser.save();
+    assertEquals(true, User.all().get(0).equals(firstUser));
+    assertEquals(true, User.all().get(1).equals(secondUser));
+  }
+
   // @Test
   // public void find_returnsUserWithSameId_secondUser() {
   //   User firstUser = new User("Ranger Avery");
