@@ -61,24 +61,27 @@ public class Animal {
     }
   }
 
-  // public void save() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "INSERT INTO animals (name) VALUES (:name);";
-  //     this.id = (int) con.createQuery(sql, true)
-  //       .addParameter("name", this.name)
-  //       .executeUpdate()
-  //       .getKey();
-  //   }
-  // }
-  //
-  // public static List<Animal> all() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT * FROM animals;";
-  //     return con.createQuery(sql)
-  //       .executeAndFetch(Animal.class);
-  //   }
-  // }
-  //
+  public void save() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO animals (speciesId, health, age, identifier) VALUES (:speciesId, :health, :age, :identifier);";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("speciesId", this.speciesId)
+        .addParameter("health", this.health)
+        .addParameter("age", this.age)
+        .addParameter("identifier", this.identifier)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+
+  public static List<Animal> all() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM animals;";
+      return con.createQuery(sql)
+        .executeAndFetch(Animal.class);
+    }
+  }
+
   // public static Animal find(int id) {
   //   try(Connection con = DB.sql2o.open()) {
   //     String sql = "SELECT * FROM animals WHERE id=:id;";

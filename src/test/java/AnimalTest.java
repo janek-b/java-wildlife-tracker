@@ -47,23 +47,23 @@ public class AnimalTest {
   }
 
 
-  // @Test
-  // public void save_assignsIdToObjectAndSavesObjectToDatabase() {
-  //   Animal testAnimal = new Animal(1);
-  //   testAnimal.save();
-  //   Animal savedAnimal = Animal.all().get(0);
-  //   assertEquals(testAnimal.getId(), savedAnimal.getId());
-  // }
-  //
-  // @Test
-  // public void all_returnsAllInstancesOfAnimal_false() {
-  //   Animal firstAnimal = new Animal(1);
-  //   firstAnimal.save();
-  //   Animal secondAnimal = new Animal(2);
-  //   secondAnimal.save();
-  //   assertEquals(true, Animal.all().get(0).equals(firstAnimal));
-  //   assertEquals(true, Animal.all().get(1).equals(secondAnimal));
-  // }
+  @Test
+  public void save_assignsIdToObjectAndSavesObjectToDatabase() {
+    Animal testAnimal = new Animal(1, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
+    testAnimal.save();
+    Animal savedAnimal = Animal.all().get(0);
+    assertEquals(testAnimal.getId(), savedAnimal.getId());
+  }
+
+  @Test
+  public void all_returnsAllInstancesOfAnimal_false() {
+    Animal firstAnimal = new Animal(1, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
+    firstAnimal.save();
+    Animal secondAnimal = new Animal(2, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
+    secondAnimal.save();
+    assertEquals(true, Animal.all().get(0).equals(firstAnimal));
+    assertEquals(true, Animal.all().get(1).equals(secondAnimal));
+  }
   //
   // @Test
   // public void find_returnsAnimalWithSameId_secondAnimal() {
