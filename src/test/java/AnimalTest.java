@@ -11,47 +11,42 @@ public class AnimalTest {
 
   @Test
   public void animal_instantiatesCorrectly_false() {
-    Animal testAnimal = new Animal(1);
+    Animal testAnimal = new Animal(1, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
     assertEquals(true, testAnimal instanceof Animal);
   }
 
   @Test
   public void getSpeciesId_returnsSpeciesIdOfAnimal() {
-    Animal testAnimal = new Animal(1);
+    Animal testAnimal = new Animal(1, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
     assertEquals(1, testAnimal.getSpeciesId());
   }
 
   @Test
-  public void addDetail_addMoreInformationToAnimal() {
-    Animal testAnimal = new Animal(1);
-    testAnimal.addDetail(Animal.Health.OKAY, Animal.Age.ADULT, "Tag on ear");
+  public void getHealth_addMoreInformationToAnimal() {
+    Animal testAnimal = new Animal(1, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
     assertEquals("OKAY", testAnimal.getHealth());
+  }
+
+  @Test
+  public void getAge_addMoreInformationToAnimal() {
+    Animal testAnimal = new Animal(1, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
     assertEquals("ADULT", testAnimal.getAge());
+  }
+
+  @Test
+  public void getIdentifier_addMoreInformationToAnimal() {
+    Animal testAnimal = new Animal(1, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
     assertEquals("Tag on ear", testAnimal.getIdentifier());
   }
 
   @Test
-  public void enumHealth_returnPossibleHealthValues() {
-    Animal testAnimal = new Animal(1);
-    for (Animal.Health health: Animal.Health.values()) {
-      System.out.println(health);
-    }
-    // System.out.println(Animal.Health.values());
+  public void equals_returnsTrueIfPropertiesAreTheSame_true() {
+    Animal firstAnimal = new Animal(1, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
+    Animal anotherAnimal = new Animal(1, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
+    assertTrue(firstAnimal.equals(anotherAnimal));
   }
 
-  // @Test
-  // public void getName_animalInstantiatesWithName_Deer() {
-  //   Animal testAnimal = new Animal(1);
-  //   assertEquals(1, testAnimal.getName());
-  // }
-  //
-  // @Test
-  // public void equals_returnsTrueIfNameIsTheSame_false() {
-  //   Animal firstAnimal = new Animal(1);
-  //   Animal anotherAnimal = new Animal(1);
-  //   assertTrue(firstAnimal.equals(anotherAnimal));
-  // }
-  //
+
   // @Test
   // public void save_assignsIdToObjectAndSavesObjectToDatabase() {
   //   Animal testAnimal = new Animal(1);

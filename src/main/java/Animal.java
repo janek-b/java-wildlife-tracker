@@ -16,12 +16,15 @@ public class Animal {
 
   private int id;
   private int speciesId;
-  private Health health;
-  private Age age;
+  private String health;
+  private String age;
   private String identifier;
 
-  public Animal(int speciesId) {
+  public Animal(int speciesId, String health, String age, String identifier) {
     this.speciesId = speciesId;
+    this.health = health;
+    this.age = age;
+    this.identifier = identifier;
   }
 
   public int getSpeciesId() {
@@ -32,34 +35,32 @@ public class Animal {
     return this.id;
   }
 
-  public void addDetail(Health health, Age age, String identifier) {
-    this.health = health;
-    this.age = age;
-    this.identifier = identifier;
-  }
-
   public String getHealth() {
-    return this.health.toString();
+    return this.health;
   }
 
   public String getAge() {
-    return this.age.toString();
+    return this.age;
   }
 
   public String getIdentifier() {
     return this.identifier;
   }
 
-  // @Override
-  // public boolean equals(Object otherAnimal) {
-  //   if(!(otherAnimal instanceof Animal)) {
-  //     return false;
-  //   } else {
-  //     Animal newAnimal = (Animal) otherAnimal;
-  //     return this.getName().equals(newAnimal.getName());
-  //   }
-  // }
-  //
+  @Override
+  public boolean equals(Object otherAnimal) {
+    if(!(otherAnimal instanceof Animal)) {
+      return false;
+    } else {
+      Animal newAnimal = (Animal) otherAnimal;
+      return this.getSpeciesId() == newAnimal.getSpeciesId() &&
+             this.getHealth().equals(newAnimal.getHealth()) &&
+             this.getAge().equals(newAnimal.getAge()) &&
+             this.getIdentifier().equals(newAnimal.getIdentifier()) &&
+             this.getId() == newAnimal.getId();
+    }
+  }
+
   // public void save() {
   //   try(Connection con = DB.sql2o.open()) {
   //     String sql = "INSERT INTO animals (name) VALUES (:name);";
