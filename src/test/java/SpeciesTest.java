@@ -44,4 +44,11 @@ public class SpeciesTest {
     assertEquals(false, testSpecies.getEndangered());
   }
 
+  @Test
+  public void equals_returnsTrueIfPropertiesAreTheSame_true() {
+    Species firstSpecies = new Species("Deer", "Mammal", "Forest", false);
+    Species anotherSpecies = new Species("Deer", "Mammal", "Forest", false);
+    assertTrue(firstSpecies.equals(anotherSpecies));
+  }
+
 }

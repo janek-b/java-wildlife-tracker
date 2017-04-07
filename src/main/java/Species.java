@@ -37,4 +37,22 @@ public class Species {
     return this.endangered;
   }
 
+  public int getId() {
+    return this.id;
+  }
+
+  @Override
+  public boolean equals(Object otherSpecies) {
+    if (!(otherSpecies instanceof Species)) {
+      return false;
+    } else {
+      Species newSpecies = (Species) otherSpecies;
+      return this.getName().equals(newSpecies.getName()) &&
+             this.getClassification().equals(newSpecies.getClassification()) &&
+             this.getHabitat().equals(newSpecies.getHabitat()) &&
+             this.getEndangered() == newSpecies.getEndangered() &&
+             this.getId() == newSpecies.getId();
+    }
+  }
+
 }
