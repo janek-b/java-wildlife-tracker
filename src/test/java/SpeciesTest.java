@@ -78,4 +78,21 @@ public class SpeciesTest {
     assertEquals(Species.find(secondSpecies.getId()), secondSpecies);
   }
 
+  @Test
+  public void delete_deletesSpeciesFromDatabase_0() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    testSpecies.delete();
+    assertEquals(0, Species.all().size());
+  }
+
+  public void update_updatesSpeciesPropertiesInDatabase_String() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    testSpecies.update("Buck", "Hills", true);
+    assertEquals("Buck", testSpecies.getName());
+    assertEquals("Hills", testSpecies.getHabitat());
+    assertEquals(true, testSpecies.getEndangered());
+  }
+
 }

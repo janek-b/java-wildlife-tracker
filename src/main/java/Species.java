@@ -85,4 +85,25 @@ public class Species {
     }
   }
 
+  public void delete() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM species WHERE id = :id;";
+      con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
+  public void update(String name, String habitat, boolean endangered) {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE species SET (name, habitat, endangered) = (:name, :habiat, :endangered) WHERE id = :id;";
+      con.createQuery(sql)
+        .addParameter("name", name)
+        .addParameter("habitat", habitat)
+        .addParameter("endangered", endangered)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
 }
