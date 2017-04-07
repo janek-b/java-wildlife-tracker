@@ -95,4 +95,18 @@ public class SpeciesTest {
     assertEquals(true, testSpecies.getEndangered());
   }
 
+  public void getAnimals_getListOfAnimalsOfThisSpecies() {
+    Species testSpecies = new Species("Wolverine", "Mammal", "Forest", true);
+    testSpecies.save();
+    Animal testAnimal1 = new Animal(testSpecies.getId(), Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
+    testAnimal1.save();
+    Animal testAnimal2 = new Animal(testSpecies.getId(), Animal.Health.ILL.toString(), Animal.Age.ADULT.toString(), "Scar on face");
+    testAnimal2.save();
+    Animal testAnimal3 = new Animal(2, Animal.Health.ILL.toString(), Animal.Age.ADULT.toString(), "Scar on face");
+    testAnimal3.save();
+    Animal[] animals = new Animal[] {testAnimal1, testAnimal2};
+    assertTrue(testSpecies.getAnimals().containsAll(Arrays.asList(animals)));
+    assertFalse(testSpecies.getAnimals().contains(testAnimal3));
+  }
+
 }

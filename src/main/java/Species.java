@@ -106,4 +106,13 @@ public class Species {
     }
   }
 
+  public List<Animal> getAnimals() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM animals WHERE speciesId = :id;";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetch(Animal.class);
+    }
+  }
+
 }
