@@ -76,18 +76,18 @@ public class SightingTest {
     assertEquals(true, Sighting.all().get(1).equals(secondTestSighting));
   }
 
-  // @Test
-  // public void find_returnsSightingWithSameId_secondSighting() {
-  //   Animal testAnimal = new Animal("Deer");
-  //   testAnimal.save();
-  //   Sighting testSighting = new Sighting (testAnimal.getId(), "45.472428, -121.946466", "Ranger Avery");
-  //   testSighting.save();
-  //   Animal secondTestAnimal = new Animal("Badger");
-  //   secondTestAnimal.save();
-  //   Sighting secondTestSighting = new Sighting (testAnimal.getId(), "45.472428, -121.946466", "Ranger Reese");
-  //   secondTestSighting.save();
-  //   assertEquals(Sighting.find(secondTestSighting.getId()), secondTestSighting);
-  // }
+  @Test
+  public void find_returnsSightingWithSameId_secondSighting() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    Sighting testSighting = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
+    testSighting.save();
+    Species secondSpecies = new Species("Black Bear", "Mammal", "Forest", false);
+    secondSpecies.save();
+    Sighting secondTestSighting = new Sighting (secondSpecies.getId(), "45.472428, -121.946466", 1);
+    secondTestSighting.save();
+    assertEquals(Sighting.find(secondTestSighting.getId()), secondTestSighting);
+  }
   //
   // @Test
   // public void find_returnsNullWhenNoAnimalFound_null() {
