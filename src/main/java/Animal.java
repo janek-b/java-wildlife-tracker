@@ -131,4 +131,13 @@ public class Animal {
     }
   }
 
+  public Integer getSightingCount() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT Count(id) FROM animals_sightings WHERE animalId = :id;";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeScalar(Integer.class);
+    }
+  }
+
 }

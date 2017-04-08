@@ -104,6 +104,21 @@ public class AnimalTest {
     assertTrue(testAnimal.getSightings().contains(testSighting));
   }
 
+  @Test
+  public void getSightingCount_createsEntryInJoinTable() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    Sighting testSighting1 = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
+    testSighting1.save();
+    Sighting testSighting2 = new Sighting (testSpecies.getId(), "45.472428, -121.946466", 2);
+    testSighting2.save();
+    Animal testAnimal = new Animal(testSpecies.getId(), Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
+    testAnimal.save();
+    testAnimal.addSighting(testSighting1);
+    testAnimal.addSighting(testSighting2);
+    assertEquals((Integer) 2, testAnimal.getSightingCount());
+  }
+
   // @Test
   // public void find_returnsNullWhenNoAnimalFound_null() {
   //   assertTrue(Animal.find(999) == null);
