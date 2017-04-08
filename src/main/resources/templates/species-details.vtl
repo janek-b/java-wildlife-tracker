@@ -1,16 +1,55 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-2 col-md-offset-1">
+    <div class="col-md-10 col-md-offset-1">
       <div class="well">
-        <h3>$species.getName()</h3>
-        <p>$species.getHabitat()</p>
+        <div class="row">
+          <div class="col-md-4">
+            <img class="center-block img-responsive img-rounded speciesImg" src="/images/default-placeholder.png" alt="Image of a $species.getName()">
+          </div>
+          <div class="col-md-8">
+            #if($species.getEndangered())
+              <h4 class="pull-right"><span class="label label-danger">Endangered</span></h4>
+            #end
+            <h3 class="text-center text-capitalize">$species.getName()</h3>
+            <hr>
+            <dl class="dl-horizontal">
+              <dt><span class="label label-default">Group:</span></dt>
+              <dd>$species.getClassification()</dd>
+            </dl>
+            <dl class="dl-horizontal">
+              <dt><span class="label label-default">Habitat:</span></dt>
+              <dd>$species.getHabitat()</dd>
+            </dl>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-md-8">
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
       <div class="well">
         <h3>Reported Sightings</h3>
+        <hr>
         #foreach($sighting in $species.getSightings())
-          
+          <div class="media">
+            <div class="media-left">
+              <img class="media-object listImg img-rounded" src="/images/default-placeholder.png" alt="Image of $species.getName() sighitng">
+              #if($sighting.getUserName())
+                <h5 class="text-center">$sighting.getUserName()</h5>
+              #end
+            </div>
+            <div class="media-body">
+              <dl class="dl-horizontal">
+                <dt>Location:</dt>
+                <dd>$sighting.getLocation()</dd>
+              </dl>
+              <dl class="dl-horizontal">
+                <dt>Time of Sighting:</dt>
+                <dd>$formatter.format($sighting.getTime())</dd>
+              </dl>
+            </div>
+          </div>
+          <hr>
         #end
       </div>
     </div>

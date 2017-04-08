@@ -1,15 +1,15 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
-      #foreach($specie in $species)
+      #foreach($species in $speciesAll)
         <h4 class="pull-right">
-        #if($specie.getEndangered())
+        #if($species.getEndangered())
           <span class="label label-danger">Endangered</span>
         #end
         </h4>
-        <h3><a href="/species/$specie.getId()">$specie.getName()</a></h3>
+        <h3 class="text-capitalize"><a href="/species/$species.getId()">$species.getName()</a></h3>
         <!-- Add sighting count -->
-        <p>$specie.getHabitat()</p>
+        <p>$species.getHabitat()</p>
         <hr>
       #end
     </div>

@@ -22,7 +22,6 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("user", request.session().attribute("user"));
       model.put("sightings", Sighting.all());
-      model.put("formatter", DateFormat.getDateTimeInstance());
       model.put("template", "templates/index.vtl");
       return render(model, layout);
     });
@@ -86,8 +85,16 @@ public class App {
     get("/species", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("user", request.session().attribute("user"));
-      model.put("species", Species.all());
+      model.put("speciesAll", Species.all());
       model.put("template", "templates/species.vtl");
+      return render(model, layout);
+    });
+
+    get("/species/:speciesId", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("user", request.session().attribute("user"));
+      model.put("species", Species.find(Integer.parseInt(request.params(":speciesId"))));
+      model.put("template", "templates/species-details.vtl");
       return render(model, layout);
     });
 
@@ -194,6 +201,7 @@ public class App {
   public static String render(Map<String, Object> model, String templatePath) {
     model.put("healthOptions", Animal.Health.values());
     model.put("ageOptions", Animal.Age.values());
+    model.put("formatter", DateFormat.getDateTimeInstance());
     return new VelocityTemplateEngine().render(new ModelAndView(model, templatePath));
   }
 
