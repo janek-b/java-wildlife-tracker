@@ -76,6 +76,7 @@ public class UserTest {
     assertEquals(0, User.all().size());
   }
 
+  @Test
   public void update_updatesUserPropertiesInDatabase_String() {
     User testUser = new User("avery@ranger.com");
     testUser.save();
@@ -84,6 +85,7 @@ public class UserTest {
     assertEquals("Ranger Jeff", User.find(testUser.getId()).getName());
   }
 
+  @Test
   public void getSightings_returnsAllSightingsByAUser() {
     User testUser = new User("avery@ranger.com");
     testUser.save();

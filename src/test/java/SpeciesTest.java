@@ -86,15 +86,17 @@ public class SpeciesTest {
     assertEquals(0, Species.all().size());
   }
 
+  @Test
   public void update_updatesSpeciesPropertiesInDatabase_String() {
     Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
     testSpecies.save();
     testSpecies.update("Buck", "Hills", true);
-    assertEquals("Buck", testSpecies.getName());
-    assertEquals("Hills", testSpecies.getHabitat());
-    assertEquals(true, testSpecies.getEndangered());
+    assertEquals("Buck", Species.find(testSpecies.getId()).getName());
+    assertEquals("Hills", Species.find(testSpecies.getId()).getHabitat());
+    assertEquals(true, Species.find(testSpecies.getId()).getEndangered());
   }
 
+  @Test
   public void getAnimals_getListOfAnimalsOfThisSpecies() {
     Species testSpecies = new Species("Wolverine", "Mammal", "Forest", true);
     testSpecies.save();
@@ -107,6 +109,18 @@ public class SpeciesTest {
     Animal[] animals = new Animal[] {testAnimal1, testAnimal2};
     assertTrue(testSpecies.getAnimals().containsAll(Arrays.asList(animals)));
     assertFalse(testSpecies.getAnimals().contains(testAnimal3));
+  }
+
+  @Test
+  public void getSightings_getListOfAllSightings() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    Sighting testSighting1 = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
+    testSighting1.save();
+    Sighting testSighting2 = new Sighting (testSpecies.getId(), "45.472428, -121.946466", 2);
+    testSighting2.save();
+    Sighting[] sightings = new Sighting[] {testSighting1, testSighting2};
+    assertTrue(testSpecies.getSightings().containsAll(Arrays.asList(sightings)));
   }
 
 }

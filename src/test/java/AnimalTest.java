@@ -82,6 +82,7 @@ public class AnimalTest {
     assertEquals(0, Animal.all().size());
   }
 
+  @Test
   public void updateName_updatesAnimalNameInDatabase_String() {
     Animal testAnimal = new Animal(1, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
     testAnimal.save();
@@ -91,6 +92,7 @@ public class AnimalTest {
     assertEquals("Scar on leg", Animal.find(testAnimal.getId()).getIdentifier());
   }
 
+  @Test
   public void addSighting_createsEntryInJoinTable() {
     Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
     testSpecies.save();

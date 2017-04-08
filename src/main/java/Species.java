@@ -17,7 +17,7 @@ public class Species {
     INSECTS,
     ARACHNIDS;
   }
-  
+
   private int id;
   private String name;
   private String classification;
@@ -106,7 +106,7 @@ public class Species {
 
   public void update(String name, String habitat, boolean endangered) {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE species SET (name, habitat, endangered) = (:name, :habiat, :endangered) WHERE id = :id;";
+      String sql = "UPDATE species SET (name, habitat, endangered) = (:name, :habitat, :endangered) WHERE id = :id;";
       con.createQuery(sql)
         .addParameter("name", name)
         .addParameter("habitat", habitat)
@@ -122,6 +122,15 @@ public class Species {
       return con.createQuery(sql)
         .addParameter("id", this.id)
         .executeAndFetch(Animal.class);
+    }
+  }
+
+  public List<Sighting> getSightings() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM sightings WHERE speciesId = :id;";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetch(Sighting.class);
     }
   }
 
