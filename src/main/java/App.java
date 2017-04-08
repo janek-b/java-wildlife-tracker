@@ -64,10 +64,18 @@ public class App {
       User loggedInUser = request.session().attribute("user");
       if (reportingUser.equals(loggedInUser)) {
         Species species = Species.find(Integer.parseInt(request.queryParams("species")));
-
         String location = request.queryParams("location");
         Sighting newSighting = new Sighting(species.getId(), location, reportingUser.getId());
         newSighting.save();
+        if (species.getEndangered()) {
+          String animalHealth = request.queryParams("animalHealth");
+          String animalAge = request.queryParams("animalAge");
+          String animalIdentifier = request.queryParams("animalIdentifier");
+          // add try to find if animal already exists
+          Animal newAnimal = new Animal(species.getId(), animalHealth, animalAge, animalIdentifier);
+          newAnimal.save();
+          newAnimal.addSighting(newSighting);
+        }
         response.redirect(request.headers("Referer"));
       } else {
         response.redirect("/");

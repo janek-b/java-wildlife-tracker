@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Animal {
   public enum Health {
-    ILL,
+    SICK,
     OKAY,
     HEALTHY;
   }

@@ -1,0 +1,18 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2 col-md-offset-1">
+      <div class="well">
+        <h3>$species.getName()</h3>
+        <p>$species.getHabitat()</p>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="well">
+        <h3>Reported Sightings</h3>
+        #foreach($sighting in $species.getSightings())
+          
+        #end
+      </div>
+    </div>
+  </div>
+</div>

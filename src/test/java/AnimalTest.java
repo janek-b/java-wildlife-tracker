@@ -85,8 +85,8 @@ public class AnimalTest {
   public void updateName_updatesAnimalNameInDatabase_String() {
     Animal testAnimal = new Animal(1, Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
     testAnimal.save();
-    testAnimal.update(Animal.Health.ILL.toString(), Animal.Age.YOUNG.toString(), "Scar on leg");
-    assertEquals("ILL", Animal.find(testAnimal.getId()).getHealth());
+    testAnimal.update(Animal.Health.SICK.toString(), Animal.Age.YOUNG.toString(), "Scar on leg");
+    assertEquals("SICK", Animal.find(testAnimal.getId()).getHealth());
     assertEquals("YOUNG", Animal.find(testAnimal.getId()).getAge());
     assertEquals("Scar on leg", Animal.find(testAnimal.getId()).getIdentifier());
   }
