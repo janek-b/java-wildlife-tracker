@@ -119,6 +119,7 @@ public class App {
       model.put("user", request.session().attribute("user"));
       model.put("recentSightings", Sighting.getRecentSightings());
       model.put("commonSpecies", Species.getMostSighted());
+      model.put("endangeredSightings", Animal.getEndangeredSightings());
       model.put("template", "templates/sightings.vtl");
       return render(model, layout);
     });

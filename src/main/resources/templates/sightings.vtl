@@ -67,7 +67,7 @@
           </div>
           <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
             <div class="panel-body">
-              <table>
+              <table class="table table-condensed table-hover">
                 <tr>
                   <th>Species</th>
                   <th>Time of Sighting</th>
@@ -76,6 +76,16 @@
                   <th>Animal Age</th>
                   <th>Animal Identifier</th>
                 </tr>
+                #foreach($animal in $endangeredSightings)
+                  <tr>
+                    <td>$animal.get("name")</td>
+                    <td>$formatter.format($animal.get("time"))</td>
+                    <td>$animal.get("location")</td>
+                    <td class="text-capitalize">$animal.get("health")</td>
+                    <td class="text-capitalize">$animal.get("age")</td>
+                    <td>$animal.get("identifier")</td>
+                  </tr>
+                #end
               </table>
             </div>
           </div>
