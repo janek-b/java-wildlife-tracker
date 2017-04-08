@@ -94,7 +94,7 @@ public class AnimalTest {
 
   @Test
   public void addSighting_createsEntryInJoinTable() {
-    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", true);
     testSpecies.save();
     Sighting testSighting = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
     testSighting.save();
@@ -106,7 +106,7 @@ public class AnimalTest {
 
   @Test
   public void getSightingCount_createsEntryInJoinTable() {
-    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", true);
     testSpecies.save();
     Sighting testSighting1 = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
     testSighting1.save();
@@ -117,6 +117,35 @@ public class AnimalTest {
     testAnimal.addSighting(testSighting1);
     testAnimal.addSighting(testSighting2);
     assertEquals((Integer) 2, testAnimal.getSightingCount());
+  }
+
+  @Test
+  public void getEndangeredSightings() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", true);
+    testSpecies.save();
+    Sighting testSighting1 = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
+    testSighting1.save();
+    Sighting testSighting2 = new Sighting (testSpecies.getId(), "45.472428, -121.946466", 2);
+    testSighting2.save();
+    Animal testAnimal = new Animal(testSpecies.getId(), Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
+    testAnimal.save();
+    Animal testAnimal2 = new Animal(testSpecies.getId(), Animal.Health.SICK.toString(), Animal.Age.YOUNG.toString(), "Spot on leg");
+    testAnimal2.save();
+    testAnimal.addSighting(testSighting1);
+    testAnimal2.addSighting(testSighting2);
+
+    assertEquals("Deer", Animal.getEndangeredSightings().get(0).get("name"));
+    assertEquals(Sighting.find(testSighting1.getId()).getTime(), Animal.getEndangeredSightings().get(0).get("time"));
+    assertEquals("45.472428, -121.946466", Animal.getEndangeredSightings().get(0).get("location"));
+    assertEquals("OKAY", Animal.getEndangeredSightings().get(0).get("health"));
+    assertEquals("ADULT", Animal.getEndangeredSightings().get(0).get("age"));
+    assertEquals("Tag on ear", Animal.getEndangeredSightings().get(0).get("identifier"));
+    assertEquals("Deer", Animal.getEndangeredSightings().get(1).get("name"));
+    assertEquals(Sighting.find(testSighting2.getId()).getTime(), Animal.getEndangeredSightings().get(1).get("time"));
+    assertEquals("45.472428, -121.946466", Animal.getEndangeredSightings().get(1).get("location"));
+    assertEquals("SICK", Animal.getEndangeredSightings().get(1).get("health"));
+    assertEquals("YOUNG", Animal.getEndangeredSightings().get(1).get("age"));
+    assertEquals("Spot on leg", Animal.getEndangeredSightings().get(1).get("identifier"));
   }
 
   // @Test

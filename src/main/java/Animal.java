@@ -1,6 +1,7 @@
 import org.sql2o.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Animal {
   public enum Health {
@@ -137,6 +138,14 @@ public class Animal {
       return con.createQuery(sql)
         .addParameter("id", this.id)
         .executeScalar(Integer.class);
+    }
+  }
+
+  public static List<Map<String, Object>> getEndangeredSightings() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT species.name, sightings.time, sightings.location, animals.health, animals.age, animals.identifier FROM sightings JOIN animals_sightings ON (sightings.id = animals_sightings.sightingId) JOIN animals ON (animals_sightings.animalId = animals.id) JOIN species ON (animals.speciesId = species.id) WHERE species.endangered = true;";
+      return con.createQuery(sql)
+        .executeAndFetchTable().asList();
     }
   }
 
