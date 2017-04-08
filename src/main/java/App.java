@@ -114,6 +114,13 @@ public class App {
       return render(model, layout);
     });
 
+    get("/sightings", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("recentSightings", Sighting.getRecentSightings());
+      model.put("template", "templates/sightings.vtl");
+      return render(model, layout);
+    });
+
     // post("/endangered_sighting", (request, response) -> {
     //   Map<String, Object> model = new HashMap<String, Object>();
     //   String rangerName = request.queryParams("rangerName");
