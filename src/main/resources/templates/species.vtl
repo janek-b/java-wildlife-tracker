@@ -3,6 +3,7 @@
     <div class="col-md-10 col-md-offset-1">
       #foreach($species in $speciesAll)
         <h4 class="pull-right">
+          <span class="label label-info">Sightings: $species.getSightingCount()</span>
         #if($species.getEndangered())
           <span class="label label-danger">Endangered</span>
         #end
