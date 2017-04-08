@@ -15,7 +15,7 @@
             <div class="form-group">
               <label for="classification">Species class</label>
               <select class="form-control" name="classification">
-                #foreach($group in $species)
+                #foreach($group in $speciesGroups)
                   <option value="$group.toString().toLowerCase()">$group.toString().toLowerCase()</option>
                 #end
               </select>

@@ -22,13 +22,10 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("user", request.session().attribute("user"));
       model.put("sightings", Sighting.all());
-      model.put("species", Species.all());
-      model.put("healthOptions", Animal.Health.values());
-      model.put("ageOptions", Animal.Age.values());
       model.put("formatter", DateFormat.getDateTimeInstance());
       model.put("template", "templates/index.vtl");
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
+      return render(model, layout);
+    });
 
     post("/login", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
@@ -42,23 +39,23 @@ public class App {
       }
       request.session().attribute("user", user);
       response.redirect(request.headers("Referer"));
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
+      return render(model, layout);
+    });
 
     get("/logout", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       request.session().removeAttribute("user");
       response.redirect(request.headers("Referer"));
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
+      return render(model, layout);
+    });
 
     get("/admin", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("user", request.session().attribute("user"));
-      model.put("species", Species.AnimalGroups.values());
+      model.put("speciesGroups", Species.AnimalGroups.values());
       model.put("template", "templates/admin.vtl");
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
+      return render(model, layout);
+    });
 
 
     post("/users/:id/sightings/new", (request, response) -> {
@@ -66,7 +63,8 @@ public class App {
       User reportingUser = User.find(Integer.parseInt(request.params(":id")));
       User loggedInUser = request.session().attribute("user");
       if (reportingUser.equals(loggedInUser)) {
-        int species = Integer.parseInt(request.queryParams("species"));
+        Species species = Species.find(Integer.parseInt(request.queryParams("species")));
+        
         String location = request.queryParams("location");
         Sighting newSighting = new Sighting(species, location, reportingUser.getId());
         newSighting.save();
@@ -74,16 +72,16 @@ public class App {
       } else {
         response.redirect("/");
       }
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
+      return render(model, layout);
+    });
 
     get("/species", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("user", request.session().attribute("user"));
       model.put("species", Species.all());
       model.put("template", "templates/species.vtl");
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
+      return render(model, layout);
+    });
 
     get("/speciesJSON", "application/json", (request, response) -> {
       return gson.toJson(Species.all());
@@ -98,8 +96,8 @@ public class App {
       Species newSpecies = new Species(speciesName, classification, habitat, endangered);
       newSpecies.save();
       response.redirect(request.headers("Referer"));
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
+      return render(model, layout);
+    });
 
     // post("/endangered_sighting", (request, response) -> {
     //   Map<String, Object> model = new HashMap<String, Object>();
@@ -182,5 +180,13 @@ public class App {
     //   model.put("template", "templates/error.vtl");
     //   return new ModelAndView(model, layout);
     // }, new VelocityTemplateEngine());
+
   }
+
+  public static String render(Map<String, Object> model, String templatePath) {
+    model.put("healthOptions", Animal.Health.values());
+    model.put("ageOptions", Animal.Age.values());
+    return new VelocityTemplateEngine().render(new ModelAndView(model, templatePath));
+  }
+
 }
