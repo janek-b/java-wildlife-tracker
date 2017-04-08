@@ -20,7 +20,7 @@
           <li><a href="/species">Local Wildlife</a></li>
           <li><a href="/sightings">Wildlife Sightings</a></li>
           #if($user)
-            <li><button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#sightingModal">Report a sighting</button></li>
+            <li><button id="reportSightingButton" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#sightingModal">Report a sighting</button></li>
           #end
         </ul>
         #if($user.getName())

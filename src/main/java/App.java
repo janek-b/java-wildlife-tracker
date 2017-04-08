@@ -7,18 +7,24 @@ import spark.template.velocity.VelocityTemplateEngine;
 import static spark.Spark.*;
 import java.text.DateFormat;
 
+import com.google.gson.Gson;
+
 public class App {
   public static void main(String[] args) {
     externalStaticFileLocation(String.format("%s/src/main/resources/public", System.getProperty("user.dir")));
 
-    staticFileLocation("/public");
+    // staticFileLocation("/public");
     String layout = "templates/layout.vtl";
+
+    Gson gson = new Gson();
 
     get("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("user", request.session().attribute("user"));
       model.put("sightings", Sighting.all());
       model.put("species", Species.all());
+      model.put("healthOptions", Animal.Health.values());
+      model.put("ageOptions", Animal.Age.values());
       model.put("formatter", DateFormat.getDateTimeInstance());
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
@@ -78,6 +84,10 @@ public class App {
       model.put("template", "templates/species.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
+    get("/speciesJSON", "application/json", (request, response) -> {
+      return gson.toJson(Species.all());
+    });
 
     post("/species/new", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
