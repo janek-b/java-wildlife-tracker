@@ -116,7 +116,9 @@ public class App {
 
     get("/sightings", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
+      model.put("user", request.session().attribute("user"));
       model.put("recentSightings", Sighting.getRecentSightings());
+      model.put("commonSpecies", Species.getMostSighted());
       model.put("template", "templates/sightings.vtl");
       return render(model, layout);
     });

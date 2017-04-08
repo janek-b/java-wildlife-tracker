@@ -41,7 +41,18 @@
           </div>
           <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             <div class="panel-body">
-
+              <table class="table table-condensed table-hover">
+                <tr>
+                  <th>Species</th>
+                  <th>Number of Sightings</th>
+                </tr>
+                #foreach($species in $commonSpecies)
+                  <tr>
+                    <td>$species.getName()</td>
+                    <td>$species.getSightingCount()</td>
+                  </tr>
+                #end
+              </table>
             </div>
           </div>
         </div>
@@ -50,7 +61,7 @@
           <div class="panel-heading" role="tab" id="headingThree">
             <h4 class="panel-title">
               <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Rare Sightings
+                Endangered Animal Sightings
               </a>
             </h4>
           </div>

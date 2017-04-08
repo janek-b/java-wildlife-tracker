@@ -134,4 +134,20 @@ public class SpeciesTest {
     assertEquals((Integer) 2, testSpecies.getSightingCount());
   }
 
+  @Test
+  public void getMostSighted_returnsOrderedListOfMostSightedSpecies() {
+    Species testSpecies1 = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies1.save();
+    Sighting testSighting1 = new Sighting(testSpecies1.getId(), "45.472428, -121.946466", 1);
+    testSighting1.save();
+    Sighting testSighting2 = new Sighting (testSpecies1.getId(), "45.472428, -121.946466", 2);
+    testSighting2.save();
+    Species testSpecies2 = new Species("Wolverine", "Mammal", "Forest", true);
+    testSpecies2.save();
+    Sighting testSighting3 = new Sighting (testSpecies2.getId(), "45.472428, -121.946466", 2);
+    testSighting3.save();
+    assertTrue(Species.getMostSighted().get(0).equals(testSpecies1));
+    assertTrue(Species.getMostSighted().get(1).equals(testSpecies2));
+  }
+
 }

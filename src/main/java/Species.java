@@ -143,4 +143,12 @@ public class Species {
     }
   }
 
+  public static List<Species> getMostSighted() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM species AS a ORDER BY (SELECT COUNT(id) FROM sightings WHERE speciesId = a.id) desc;";
+      return con.createQuery(sql)
+        .executeAndFetch(Species.class);
+    }
+  }
+
 }
