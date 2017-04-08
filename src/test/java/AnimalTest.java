@@ -91,6 +91,17 @@ public class AnimalTest {
     assertEquals("Scar on leg", Animal.find(testAnimal.getId()).getIdentifier());
   }
 
+  public void addSighting_createsEntryInJoinTable() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    Sighting testSighting = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
+    testSighting.save();
+    Animal testAnimal = new Animal(testSpecies.getId(), Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
+    testAnimal.save();
+    testAnimal.addSighting(testSighting);
+    assertTrue(testAnimal.getSightings().contains(testSighting));
+  }
+
   // @Test
   // public void find_returnsNullWhenNoAnimalFound_null() {
   //   assertTrue(Animal.find(999) == null);

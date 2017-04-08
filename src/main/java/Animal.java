@@ -112,14 +112,23 @@ public class Animal {
     }
   }
 
-  // public List<Sighting> getSightings() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT * FROM sightings WHERE animal_id=:id;";
-  //       List<Sighting> sightings = con.createQuery(sql)
-  //         .addParameter("id", id)
-  //         .executeAndFetch(Sighting.class);
-  //     return sightings;
-  //   }
-  // }
+  public void addSighting(Sighting sighting) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO animals_sightings (animalId, sightingId) VALUES (:animalId, :sightingId);";
+      con.createQuery(sql)
+        .addParameter("animalId", this.id)
+        .addParameter("sightingId", sighting.getId())
+        .executeUpdate();
+    }
+  }
+
+  public List<Sighting> getSightings() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT sightings.* FROM sightings JOIN animals_sightings ON (sightings.id = animals_sightings.sightingId) JOIN animals ON (animals_sightings.animalId = animals.id) WHERE animals.id=:id;";
+      return con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetch(Sighting.class);
+    }
+  }
 
 }

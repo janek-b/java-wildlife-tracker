@@ -64,9 +64,9 @@ public class App {
       User loggedInUser = request.session().attribute("user");
       if (reportingUser.equals(loggedInUser)) {
         Species species = Species.find(Integer.parseInt(request.queryParams("species")));
-        
+
         String location = request.queryParams("location");
-        Sighting newSighting = new Sighting(species, location, reportingUser.getId());
+        Sighting newSighting = new Sighting(species.getId(), location, reportingUser.getId());
         newSighting.save();
         response.redirect(request.headers("Referer"));
       } else {
