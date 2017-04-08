@@ -123,4 +123,15 @@ public class SpeciesTest {
     assertTrue(testSpecies.getSightings().containsAll(Arrays.asList(sightings)));
   }
 
+  @Test
+  public void getSightingCount_returnsTheNumberOfSighting() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    Sighting testSighting1 = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
+    testSighting1.save();
+    Sighting testSighting2 = new Sighting (testSpecies.getId(), "45.472428, -121.946466", 2);
+    testSighting2.save();
+    assertEquals((Integer) 2, testSpecies.getSightingCount());
+  }
+
 }

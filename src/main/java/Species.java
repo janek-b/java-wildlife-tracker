@@ -134,4 +134,13 @@ public class Species {
     }
   }
 
+  public Integer getSightingCount() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT Count(id) FROM sightings WHERE speciesId = :id;";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeScalar(Integer.class);
+    }
+  }
+
 }
