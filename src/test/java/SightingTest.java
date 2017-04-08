@@ -100,6 +100,23 @@ public class SightingTest {
     secondTestSighting.save();
     assertEquals(Sighting.find(secondTestSighting.getId()), secondTestSighting);
   }
+
+  @Test
+  public void getRecentSightings_returnsListOfMostRecentSightings() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    Sighting testSighting1 = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
+    testSighting1.save();
+    Sighting testSighting2 = new Sighting(testSpecies.getId(), "45.472428, -121.9", 2);
+    testSighting2.save();
+    Species secondSpecies = new Species("Black Bear", "Mammal", "Forest", false);
+    secondSpecies.save();
+    Sighting secondTestSighting = new Sighting (secondSpecies.getId(), "45.472428, -121.946466", 1);
+    secondTestSighting.save();
+    assertTrue(Sighting.getRecentSightings().get(0).equals(secondTestSighting));
+    assertTrue(Sighting.getRecentSightings().get(1).equals(testSighting2));
+    assertTrue(Sighting.getRecentSightings().get(2).equals(testSighting1));
+  }
   //
   // @Test
   // public void find_returnsNullWhenNoAnimalFound_null() {

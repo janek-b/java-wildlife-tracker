@@ -94,4 +94,12 @@ public class Sighting {
     // }
   }
 
+  public static List<Sighting> getRecentSightings() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM sightings WHERE time > (CURRENT_DATE - INTERVAL '30 days') ORDER BY time desc;";
+      return con.createQuery(sql)
+        .executeAndFetch(Sighting.class);
+    }
+  }
+
 }
