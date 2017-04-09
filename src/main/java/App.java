@@ -201,6 +201,16 @@ public class App {
       return render(model, layout);
     });
 
+    get("/search", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      String searchInput = request.queryParams("searchInput");
+      model.put("user", request.session().attribute("user"));
+      model.put("speciesResults", Species.search(searchInput));
+      model.put("animals", Animal.search(searchInput));
+      model.put("template", "templates/result.vtl");
+      return render(model, layout);
+    });
+
   }
 
   public static String render(Map<String, Object> model, String templatePath) {

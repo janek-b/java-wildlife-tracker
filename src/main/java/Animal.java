@@ -32,6 +32,15 @@ public class Animal implements DatabaseManagement{
     return this.speciesId;
   }
 
+  public String getSpeciesName() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT name FROM species WHERE id = :speciesId;";
+      return con.createQuery(sql)
+        .addParameter("speciesId", this.speciesId)
+        .executeAndFetchFirst(String.class);
+    }
+  }
+
   public int getId() {
     return this.id;
   }

@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="well">
+        <h4>Species</h4>
+        #if($speciesResults.size() > 0)
+          <table class="table table-condensed">
+            <tr>
+              <th>Species</th>
+              <th>Number of Sightings</th>
+            </tr>
+            #foreach($species in $speciesResults)
+              <tr>
+                <td><a href="/species/$species.getId()">$species.getName()</a></td>
+                <td><a href="/species/$species.getId()">$species.getSightingCount()</a></td>
+              </tr>
+            #end
+          </table>
+        #else
+          <h5>No speices with matching name found.</h5>
+        #end
+      </div>
+      <div class="well">
+        <h4>Animals with matching descriptions</h4>
+        #if($animals.size() > 0)
+          <table class="table table-condensed">
+            <tr>
+              <th>Species</th>
+              <th>Identifier</th>
+              <th>Number of Sightings</th>
+              <th>Last Sighted</th>
+            </tr>
+            #foreach($animal in $animals)
+              <tr>
+                <td><a href="/species/$animal.getSpeciesId()">$animal.getSpeciesName()</a></td>
+                <td><a href="/species/$animal.getSpeciesId()">$animal.getIdentifier()</a></td>
+                <td><a href="/species/$animal.getSpeciesId()">$animal.getSightingCount()</a></td>
+                <td><a href="/species/$animal.getSpeciesId()">$formatter.format($animal.getLastSighted().getTime())</a></td>
+              </tr>
+            #end
+          </table>
+        #else
+          <h5>No animals with matching description found.</h5>
+        #end
+      </div>
+    </div>
+  </div>
+</div>
