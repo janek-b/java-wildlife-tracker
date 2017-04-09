@@ -164,7 +164,7 @@ public class Species implements DatabaseManagement {
 
   public static List<Species> getMostSighted() {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM species AS a ORDER BY (SELECT COUNT(id) FROM sightings WHERE speciesId = a.id) desc;";
+      String sql = "SELECT * FROM species WHERE id IN (SELECT speciesId FROM sightings GROUP BY speciesId HAVING COUNT(*) > 0 ORDER BY COUNT(*) desc);";
       return con.createQuery(sql)
         .executeAndFetch(Species.class);
     }

@@ -12,6 +12,7 @@ public class Sighting {
   private int userId;
   private Timestamp time;
   private int id;
+  private String image;
 
   public Sighting(int speciesId, String location, int userId) {
     this.speciesId = speciesId;
@@ -54,6 +55,21 @@ public class Sighting {
       return con.createQuery(sql)
         .addParameter("speciesId", this.speciesId)
         .executeAndFetchFirst(String.class);
+    }
+  }
+
+  public String getImage() {
+    return this.image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE sightings SET image = :image WHERE id = :id;";
+      con.createQuery(sql)
+        .addParameter("image", image)
+        .addParameter("id", this.id)
+        .executeUpdate();
     }
   }
 

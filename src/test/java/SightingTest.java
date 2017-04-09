@@ -117,6 +117,18 @@ public class SightingTest {
     assertTrue(Sighting.getRecentSightings().get(1).equals(testSighting2));
     assertTrue(Sighting.getRecentSightings().get(2).equals(testSighting1));
   }
+
+
+  @Test
+  public void getImage_returnsImageUrl() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    Sighting testSighting = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
+    testSighting.save();
+    testSighting.setImage("imageURL");
+    assertEquals("imageURL", testSighting.getImage());
+    assertEquals("imageURL", Sighting.find(testSighting.getId()).getImage());
+  }
   //
   // @Test
   // public void find_returnsNullWhenNoAnimalFound_null() {

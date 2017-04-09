@@ -69,7 +69,7 @@
             <form id="sightingForm" action="/users/$user.getId()/sightings/new" method="post">
               <div class="form-group">
                 <label for="species">Species</label>
-                <select id="speciesSelector" class="form-control" name="species">
+                <select id="speciesSelector" class="form-control" name="species" required>
                   <option>Select Species</option>
                 </select>
               </div>
@@ -100,7 +100,11 @@
               </div>
               <div class="form-group">
                 <label for="location">location</label>
-                <input type="text" name="location" class="form-control">
+                <input type="text" name="location" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="image">Image</label>
+                <input type="text" name="image" class="form-control">
               </div>
             </form>
           </div>
