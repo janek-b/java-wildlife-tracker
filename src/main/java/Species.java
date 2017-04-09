@@ -170,4 +170,14 @@ public class Species implements DatabaseManagement {
     }
   }
 
+  public static List<Species> search(String input) {
+    String newInput = "%" + input + "%";
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM species WHERE lower(name) LIKE lower(:newInput);";
+      return con.createQuery(sql)
+        .addParameter("newInput", newInput)
+        .executeAndFetch(Species.class);
+    }
+  }
+
 }

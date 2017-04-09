@@ -159,4 +159,16 @@ public class SpeciesTest {
     assertEquals("imageURL", Species.find(testSpecies.getId()).getImage());
   }
 
+  public void search_returnsMatchingResultsBasedOnName() {
+    Species testSpecies1 = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies1.save();
+    Species testSpecies2 = new Species("Wolverine", "Mammal", "Forest", false);
+    testSpecies2.save();
+    Species testSpecies3 = new Species("Bear", "Mammal", "Forest", false);
+    testSpecies3.save();
+    Species[] matchingSpecies = new Species[] {testSpecies1, testSpecies2};
+    assertTrue(Species.search("er").containsAll(Arrays.asList(matchingSpecies)));
+    assertFalse(Species.search("er").contains(testSpecies3));
+  }
+
 }
