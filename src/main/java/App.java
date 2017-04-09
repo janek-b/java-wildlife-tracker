@@ -94,6 +94,7 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("user", request.session().attribute("user"));
       model.put("species", Species.find(Integer.parseInt(request.params(":speciesId"))));
+      model.put("speciesGroups", Species.AnimalGroups.values());
       model.put("template", "templates/species-details.vtl");
       return render(model, layout);
     });
@@ -110,7 +111,33 @@ public class App {
       boolean endangered = (request.queryParamsValues("endangered") != null);
       Species newSpecies = new Species(speciesName, classification, habitat, endangered);
       newSpecies.save();
+      if (request.queryParams("image") != null) {
+        newSpecies.setImage(request.queryParams("image"));
+      } else {
+        newSpecies.setImage("/images/default-placeholder.png");
+      }
       response.redirect(request.headers("Referer"));
+      return render(model, layout);
+    });
+
+    post("/species/:speciesId/update", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Species species = Species.find(Integer.parseInt(request.params(":speciesId")));
+      String speciesName = request.queryParams("speciesName");
+      String classification = request.queryParams("classification");
+      String habitat = request.queryParams("habitat");
+      boolean endangered = (request.queryParamsValues("endangered") != null);
+      String image = request.queryParams("image");
+      species.update(speciesName, habitat, endangered, image);
+      response.redirect(request.headers("Referer"));
+      return render(model, layout);
+    });
+
+    post("/species/:speciesId/delete", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Species species = Species.find(Integer.parseInt(request.params(":speciesId")));
+      species.delete();
+      response.redirect("/species");
       return render(model, layout);
     });
 

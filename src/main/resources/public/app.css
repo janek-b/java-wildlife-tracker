@@ -27,9 +27,10 @@ body {
 
 .listImg {
   width: 100px;
-  height: auto;
+  height: 100px;
   box-shadow: 0 0.5px 1px black;
   margin: 2px;
+  object-fit: cover;
 }
 
 select {

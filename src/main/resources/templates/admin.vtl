@@ -5,16 +5,20 @@
         <form action="/species/new" method="post">
           <div class="form-group">
             <label for="speciesName">Species name</label>
-            <input type="text" name="speciesName" class="form-control">
+            <input type="text" name="speciesName" class="form-control" required>
           </div>
           <div class="form-group">
             <label for="habitat">Habitat</label>
-            <input type="text" name="habitat" class="form-control">
+            <input type="text" name="habitat" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="image">Image URL</label>
+            <input type="text" name="image" class="form-control" required>
           </div>
           <div class="form-group form-inline">
             <div class="form-group">
               <label for="classification">Species class</label>
-              <select class="form-control" name="classification">
+              <select class="form-control" name="classification" required>
                 #foreach($group in $speciesGroups)
                   <option value="$group.toString().toLowerCase()">$group.toString().toLowerCase()</option>
                 #end
