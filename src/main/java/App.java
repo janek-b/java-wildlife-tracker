@@ -96,6 +96,14 @@ public class App {
       return render(model, layout);
     });
 
+    get("/species/endangered", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("user", request.session().attribute("user"));
+      model.put("speciesAll", Species.getEndangeredSpecies());
+      model.put("template", "templates/species.vtl");
+      return render(model, layout);
+    });
+
     get("/species/:speciesId", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("user", request.session().attribute("user"));

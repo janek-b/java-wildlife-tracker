@@ -9,7 +9,7 @@
           <div class="media-body">
             <h4 class="pull-right">
               #if($species.getEndangered())
-                <span class="label label-danger">Endangered</span>
+                <a href="/species/endangered"><span class="label label-danger">Endangered</span></a>
               #end
             </h4>
             <h3 class="text-capitalize"><a href="/species/$species.getId()">$species.getName()</a></h3>

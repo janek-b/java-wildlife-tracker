@@ -42,7 +42,7 @@
             </tr>
             #foreach($animal in $species.getAnimals())
               <tr>
-                <td>$animal.getIdentifier()</td>
+                <td><a href="#" data-html="true" data-placement="left" data-toggle="tooltip" title='<img class="img-responsive img-rounded speciesImg" src="$animal.getLastSighted().getImage()">'>$animal.getIdentifier()</a></td>
                 <td class="text-capitalize">$animal.getHealth()</td>
                 <td class="text-capitalize">$animal.getAge()</td>
                 <td>$formatter.format($animal.getLastSighted().getTime())</td>
@@ -110,31 +110,16 @@
             <label for="image">Image URL</label>
             <input value="$species.getImage()" type="text" name="image" class="form-control" required>
           </div>
-          <div class="form-group form-inline">
-            <div class="form-group">
-              <label for="classification">Species class</label>
-              <select class="form-control" name="classification">
-                #foreach($group in $speciesGroups)
-                  #if($group.toString().toLowerCase() == $species.getClassification())
-                    <option selected value="$group.toString().toLowerCase()">$group.toString().toLowerCase()</option>
-                  #else
-                    <option value="$group.toString().toLowerCase()">$group.toString().toLowerCase()</option>
-                  #end
+          <div class="form-group">
+            <div class="checkbox">
+              <label>
+                #if($species.getEndangered())
+                  <input checked name="endangered" type="checkbox">
+                #else
+                  <input name="endangered" type="checkbox">
                 #end
-              </select>
-              <!-- <input type="text" name="classification" class="form-control"> -->
-            </div>
-            <div class="form-group pull-right">
-              <div class="checkbox">
-                <label>
-                  #if($species.getEndangered())
-                    <input checked name="endangered" type="checkbox">
-                  #else
-                    <input name="endangered" type="checkbox">
-                  #end
-                  Endangered
-                </label>
-              </div>
+                Endangered
+              </label>
             </div>
           </div>
         </form>

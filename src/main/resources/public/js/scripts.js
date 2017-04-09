@@ -1,5 +1,6 @@
 $(function() {
   $('[data-toggle="popover"]').popover()
+  $('[data-toggle="tooltip"]').tooltip()
 
   fetch('/speciesJSON').then(function(response) {
     return response.json();
@@ -17,9 +18,9 @@ $(function() {
       });
       match = match[0];
       if (match.endangered) {
-        $("#endangered").show();
+        $("#endangered").slideDown();
       } else {
-        $("#endangered").hide();
+        $("#endangered").slideUp();
       }
     })
   }

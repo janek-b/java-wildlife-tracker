@@ -164,7 +164,7 @@ public class Species implements DatabaseManagement {
 
   public static List<Species> getMostSighted() {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM species WHERE id IN (SELECT speciesId FROM sightings GROUP BY speciesId HAVING COUNT(*) > 0 ORDER BY COUNT(*) desc);";
+      String sql = "SELECT * FROM species AS a WHERE id IN (SELECT speciesId FROM sightings GROUP BY speciesId HAVING COUNT(*) > 0) ORDER BY (SELECT COUNT(*) FROM sightings WHERE speciesId = a.id) desc;";
       return con.createQuery(sql)
         .executeAndFetch(Species.class);
     }
@@ -176,6 +176,14 @@ public class Species implements DatabaseManagement {
       String sql = "SELECT * FROM species WHERE lower(name) LIKE lower(:newInput);";
       return con.createQuery(sql)
         .addParameter("newInput", newInput)
+        .executeAndFetch(Species.class);
+    }
+  }
+
+  public static List<Species> getEndangeredSpecies() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM species WHERE endangered = true;";
+      return con.createQuery(sql)
         .executeAndFetch(Species.class);
     }
   }
