@@ -51,6 +51,7 @@ public class App {
     get("/admin", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("user", request.session().attribute("user"));
+      model.put("users", User.all());
       model.put("speciesGroups", Species.AnimalGroups.values());
       model.put("template", "templates/admin.vtl");
       return render(model, layout);
@@ -148,6 +149,24 @@ public class App {
       model.put("commonSpecies", Species.getMostSighted());
       model.put("endangeredSightings", Animal.getEndangeredSightings());
       model.put("template", "templates/sightings.vtl");
+      return render(model, layout);
+    });
+
+    post("/users/:userId/update", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      User user = User.find(Integer.parseInt(request.params(":userId")));
+      String userName = request.queryParams("userName");
+      String userEmail = request.queryParams("userEmail");
+      user.update(userEmail, userName);
+      response.redirect(request.headers("Referer"));
+      return render(model, layout);
+    });
+
+    post("/users/:userId/delete", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      User user = User.find(Integer.parseInt(request.params(":userId")));
+      user.delete();
+      response.redirect(request.headers("Referer"));
       return render(model, layout);
     });
 

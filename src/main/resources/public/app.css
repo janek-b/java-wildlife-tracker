@@ -45,3 +45,8 @@ select {
   padding-right: 20px;
   padding-left: 20px;
 }
+
+.popover {
+  width: 400px;
+  padding: 10px;
+}

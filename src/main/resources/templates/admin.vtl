@@ -1,7 +1,8 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <div class="well">
+    <div class="col-md-10 col-md-offset-1">
+      <!-- <div class="well">
+        <h2>Add a Species</h2>
         <form action="/species/new" method="post">
           <div class="form-group">
             <label for="speciesName">Species name</label>
@@ -23,7 +24,6 @@
                   <option value="$group.toString().toLowerCase()">$group.toString().toLowerCase()</option>
                 #end
               </select>
-              <!-- <input type="text" name="classification" class="form-control"> -->
             </div>
             <div class="form-group pull-right">
               <div class="checkbox">
@@ -38,7 +38,93 @@
             <button type="submit" class="btn btn-default">Add Species</button>
           </div>
         </form>
+      </div> -->
+
+      <div class="">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#species" aria-controls="species" role="tab" data-toggle="tab">Add Species</a></li>
+          <li role="presentation"><a href="#users" aria-controls="users" role="tab" data-toggle="tab">Manage Users</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="species">
+            <form action="/species/new" method="post">
+              <div class="form-group">
+                <label for="speciesName">Species name</label>
+                <input type="text" name="speciesName" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="habitat">Habitat</label>
+                <input type="text" name="habitat" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="image">Image URL</label>
+                <input type="text" name="image" class="form-control" required>
+              </div>
+              <div class="form-group form-inline">
+                <div class="form-group">
+                  <label for="classification">Species class</label>
+                  <select class="form-control" name="classification" required>
+                    #foreach($group in $speciesGroups)
+                      <option value="$group.toString().toLowerCase()">$group.toString().toLowerCase()</option>
+                    #end
+                  </select>
+                  <!-- <input type="text" name="classification" class="form-control"> -->
+                </div>
+                <div class="form-group pull-right">
+                  <div class="checkbox">
+                    <label>
+                      <input name="endangered" type="checkbox">
+                      Endangered
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-default">Add Species</button>
+              </div>
+            </form>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="users">
+            <table class="table table-condensed">
+              <tr>
+                <th>User Name</th>
+                <th>Email addresss</th>
+                <th></th>
+              </tr>
+              #foreach($user in $users)
+                <tr>
+                  #if($user.getName())
+                    <td>$user.getName()</td>
+                  #else
+                    <td>No name provided</td>
+                  #end
+                  <td>$user.getEmail()</td>
+                  <td>
+                    <button type="button" class="btn btn-default btn-xs" data-container="body" data-toggle="popover" data-placement="right" data-html="true" data-content='<form action="/users/$user.getId()/update" method="post">
+                                    <div class="form-group">
+                                      <input type="text" name="userName" class="form-control" value="$user.getName()" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <input type="text" name="userEmail" class="form-control" value="$user.getEmail()" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <button type="submit" class="btn btn-success pull-right">Update</button>
+                                    </div>
+                                  </form>
+                                  <form action="/users/$user.getId()/delete" method="post">
+                                    <button type="submit" class="btn btn-danger pull-left">Delete</button>
+                                  </form>'>Edit User</button>
+                  </td>
+                </tr>
+              #end
+            </table>
+          </div>
+        </div>
+
       </div>
+
     </div>
   </div>
 </div>
