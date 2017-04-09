@@ -39,6 +39,15 @@ public class Sighting {
     return this.userId;
   }
 
+  public String getUserName() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT name FROM users WHERE id = :userId;";
+      return con.createQuery(sql)
+        .addParameter("userId", this.userId)
+        .executeAndFetchFirst(String.class);
+    }
+  }
+
   public String getSpeciesName() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT name FROM species WHERE id = :speciesId;";

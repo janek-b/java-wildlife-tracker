@@ -149,4 +149,13 @@ public class Animal {
     }
   }
 
+  public Sighting getLastSighted() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT sightings.* FROM sightings JOIN animals_sightings ON (sightings.id = animals_sightings.sightingId) JOIN animals ON (animals_sightings.animalId = animals.id) WHERE animals.id = :id ORDER BY sightings.time desc;";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetchFirst(Sighting.class);
+    }
+  }
+
 }

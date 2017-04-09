@@ -148,6 +148,21 @@ public class AnimalTest {
     assertEquals("Spot on leg", Animal.getEndangeredSightings().get(1).get("identifier"));
   }
 
+  @Test
+  public void getLastSighted_returnsLastSightingOfAnimal() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", true);
+    testSpecies.save();
+    Sighting testSighting1 = new Sighting(testSpecies.getId(), "45.472428, -121.946466", 1);
+    testSighting1.save();
+    Sighting testSighting2 = new Sighting (testSpecies.getId(), "45.472428, -121.946466", 2);
+    testSighting2.save();
+    Animal testAnimal = new Animal(testSpecies.getId(), Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
+    testAnimal.save();
+    testAnimal.addSighting(testSighting1);
+    testAnimal.addSighting(testSighting2);
+    assertEquals(testSighting2, testAnimal.getLastSighted());
+  }
+
   // @Test
   // public void find_returnsNullWhenNoAnimalFound_null() {
   //   assertTrue(Animal.find(999) == null);

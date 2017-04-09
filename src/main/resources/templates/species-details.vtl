@@ -28,6 +28,31 @@
       </div>
     </div>
   </div>
+  #if($species.getEndangered())
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="well">
+          <h3>Known Animals</h3>
+          <table class="table table-condensed">
+            <tr>
+              <th>Identifier</th>
+              <th>Health</th>
+              <th>Age</th>
+              <th>Last Sighted</th>
+            </tr>
+            #foreach($animal in $species.getAnimals())
+              <tr>
+                <td>$animal.getIdentifier()</td>
+                <td class="text-capitalize">$animal.getHealth()</td>
+                <td class="text-capitalize">$animal.getAge()</td>
+                <td>$formatter.format($animal.getLastSighted().getTime())</td>
+              </tr>
+            #end
+          </table>
+        </div>
+      </div>
+    </div>
+  #end
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <div class="well">
@@ -42,6 +67,12 @@
               #end
             </div>
             <div class="media-body">
+              #if($sighting.getUserName())
+                <dl class="dl-horizontal">
+                  <dt>Reported By:</dt>
+                  <dd><a href="/user/$sighting.getUserId()">$sighting.getUserName()</a></dd>
+                </dl>
+              #end
               <dl class="dl-horizontal">
                 <dt>Location:</dt>
                 <dd>$sighting.getLocation()</dd>
