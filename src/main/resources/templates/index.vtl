@@ -1,19 +1,25 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="page-header">
+        <h1>Forest Service <small>Wildlife Tracker</small></h1>
+        #if(!($user))
+          <h4><small>Sign in to report a sighting.</small></h4>
+        #end
+      </div>
       <div class="well">
-        <h2>Common Sightings</h2>
+        <h3 class="text-center">Common Sightings</h2>
         <table class="table table-condensed">
           <tr>
+            <th></th>
             <th>Species</th>
-            <th>Location</th>
-            <th>Time of Sighting</th>
+            <th>Number of Sightings</th>
           </tr>
-          #foreach($sighting in $sightings)
+          #foreach($species in $commonSpecies)
             <tr>
-              <td>$sighting.getSpeciesName()</td>
-              <td>$sighting.getLocation()</td>
-              <td>$formatter.format($sighting.getTime())</td>
+              <td><img class="listImg img-rounded" src="$species.getImage()" alt="Image of $species.getName()"></td>
+              <td class="text-capitalize">$species.getName()</td>
+              <td>$species.getSightingCount()</td>
             </tr>
           #end
         </table>
