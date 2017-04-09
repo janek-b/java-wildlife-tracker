@@ -1,51 +1,105 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
 
       <div class="">
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="#species" aria-controls="species" role="tab" data-toggle="tab">Add Species</a></li>
+          <li role="presentation" class="active"><a href="#species" aria-controls="species" role="tab" data-toggle="tab">Manage Species</a></li>
           <li role="presentation"><a href="#users" aria-controls="users" role="tab" data-toggle="tab">Manage Users</a></li>
         </ul>
 
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="species">
-            <form action="/species/new" method="post">
-              <div class="form-group">
-                <label for="speciesName">Species name</label>
-                <input type="text" name="speciesName" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label for="habitat">Habitat</label>
-                <input type="text" name="habitat" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label for="image">Image URL</label>
-                <input type="text" name="image" class="form-control" required>
-              </div>
-              <div class="form-group form-inline">
+            <h4>All Species</h4>
+            <table class="table table-condensed table-responsive">
+              <tr>
+                <th>Name</th>
+                <th>Group</th>
+                <th>Habitat</th>
+                <th>Endangered</th>
+                <th></th>
+              </tr>
+              #foreach($species in $speciesAll)
+                <tr>
+                  <td><a href="/species/$species.getId()" data-html="true" data-placement="bottom" data-toggle="tooltip" title='<img class="img-responsive img-rounded speciesImg" src="$species.getImage()">'>$species.getName()</a></td>
+                  <td class="text-capitalize">$species.getClassification()</td>
+                  <td>$species.getHabitat()</td>
+                  <td>$species.getEndangered()</td>
+                  <td>
+                    <button type="button" class="btn btn-default btn-xs" data-container="body" data-toggle="popover" data-placement="left" data-html="true" data-content='<form action="/species/$species.getId()/update" method="post">
+                                    <div class="form-group">
+                                      <label for="speciesName">Species name</label>
+                                      <input value="$species.getName()" type="text" name="speciesName" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="habitat">Habitat</label>
+                                      <input value="$species.getHabitat()" type="text" name="habitat" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="image">Image URL</label>
+                                      <input value="$species.getImage()" type="text" name="image" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <div class="checkbox">
+                                        <label>
+                                          #if($species.getEndangered())
+                                            <input checked name="endangered" type="checkbox">
+                                          #else
+                                            <input name="endangered" type="checkbox">
+                                          #end
+                                          Endangered
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <button type="submit" class="btn btn-success pull-right">Update</button>
+                                    </div>
+                                  </form>
+                                  <form action="/users/$user.getId()/delete" method="post">
+                                    <button type="submit" class="btn btn-danger pull-left">Delete</button>
+                                  </form>'>Edit</button>
+                  </td>
+                </tr>
+              #end
+            </table>
+            <div class="well">
+              <h4>Add a new Species</h4>
+              <form action="/species/new" method="post">
                 <div class="form-group">
-                  <label for="classification">Species class</label>
-                  <select class="form-control" name="classification" required>
-                    #foreach($group in $speciesGroups)
-                      <option value="$group.toString().toLowerCase()">$group.toString().toLowerCase()</option>
-                    #end
-                  </select>
-                  <!-- <input type="text" name="classification" class="form-control"> -->
+                  <label for="speciesName">Species name</label>
+                  <input type="text" name="speciesName" class="form-control" required>
                 </div>
-                <div class="form-group pull-right">
-                  <div class="checkbox">
-                    <label>
-                      <input name="endangered" type="checkbox">
-                      Endangered
-                    </label>
+                <div class="form-group">
+                  <label for="habitat">Habitat</label>
+                  <input type="text" name="habitat" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="image">Image URL</label>
+                  <input type="text" name="image" class="form-control" required>
+                </div>
+                <div class="form-group form-inline">
+                  <div class="form-group">
+                    <label for="classification">Species class</label>
+                    <select class="form-control" name="classification" required>
+                      #foreach($group in $speciesGroups)
+                        <option value="$group.toString().toLowerCase()">$group.toString().toLowerCase()</option>
+                      #end
+                    </select>
+                  </div>
+                  <div class="form-group pull-right">
+                    <div class="checkbox">
+                      <label>
+                        <input name="endangered" type="checkbox">
+                        Endangered
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <button type="submit" class="btn btn-default">Add Species</button>
-              </div>
-            </form>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-default">Add Species</button>
+                </div>
+              </form>
+            </div>
           </div>
 
           <div role="tabpanel" class="tab-pane" id="users">

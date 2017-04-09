@@ -7,7 +7,6 @@
             <img class="center-block img-responsive img-rounded speciesImg" src="$species.getImage()" alt="Image of a $species.getName()">
           </div>
           <div class="col-md-8">
-            <button type="button" class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#speciesModal">Edit</button>
             #if($species.getEndangered())
               <h4 class="pull-right"><span class="label label-danger">Endangered</span></h4>
             #end
@@ -82,56 +81,6 @@
           </div>
           <hr>
         #end
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="speciesModal" tabindex="-1" role="dialog" aria-labelledby="speciesModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="speciesModalLabel">Edit Species</h4>
-      </div>
-      <div class="modal-body">
-
-        <form id="speciesForm" action="/species/$species.getId()/update" method="post">
-          <div class="form-group">
-            <label for="speciesName">Species name</label>
-            <input value="$species.getName()" type="text" name="speciesName" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label for="habitat">Habitat</label>
-            <input value="$species.getHabitat()" type="text" name="habitat" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label for="image">Image URL</label>
-            <input value="$species.getImage()" type="text" name="image" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <div class="checkbox">
-              <label>
-                #if($species.getEndangered())
-                  <input checked name="endangered" type="checkbox">
-                #else
-                  <input name="endangered" type="checkbox">
-                #end
-                Endangered
-              </label>
-            </div>
-          </div>
-        </form>
-
-      </div>
-      <div class="modal-footer">
-        <form action="/species/$species.getId()/delete" method="post">
-          <button type="submit" class="pull-left btn btn-danger">Delete</button>
-        </form>
-        <button type="button" class="pull-right btn btn-default" data-dismiss="modal">Close</button>
-        <button form="speciesForm" type="submit" class="pull-right btn btn-success">Edit Species</button>
-
       </div>
     </div>
   </div>

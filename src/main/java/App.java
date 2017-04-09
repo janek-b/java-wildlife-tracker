@@ -52,6 +52,7 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("user", request.session().attribute("user"));
       model.put("users", User.all());
+      model.put("speciesAll", Species.all());
       model.put("speciesGroups", Species.AnimalGroups.values());
       model.put("template", "templates/admin.vtl");
       return render(model, layout);
