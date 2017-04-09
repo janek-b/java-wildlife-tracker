@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.sql.Timestamp;
 
-public class User {
+public class User implements DatabaseManagement {
   private int id;
   private String email;
   private String name;
@@ -43,6 +43,7 @@ public class User {
     }
   }
 
+  @Override
   public void save() {
     try (Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO users (email) VALUES (:email);";
@@ -70,6 +71,7 @@ public class User {
     }
   }
 
+  @Override
   public void delete() {
     try (Connection con = DB.sql2o.open()) {
       String sql = "DELETE FROM users WHERE id = :id;";

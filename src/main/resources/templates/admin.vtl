@@ -104,7 +104,11 @@
                   <td>
                     <button type="button" class="btn btn-default btn-xs" data-container="body" data-toggle="popover" data-placement="right" data-html="true" data-content='<form action="/users/$user.getId()/update" method="post">
                                     <div class="form-group">
-                                      <input type="text" name="userName" class="form-control" value="$user.getName()" required>
+                                      #if($user.getName())
+                                        <input type="text" name="userName" class="form-control" value="$user.getName()" required>
+                                      #else
+                                        <input type="text" name="userName" class="form-control" required>
+                                      #end
                                     </div>
                                     <div class="form-group">
                                       <input type="text" name="userEmail" class="form-control" value="$user.getEmail()" required>

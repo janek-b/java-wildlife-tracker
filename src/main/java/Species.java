@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.sql.Timestamp;
 
-public class Species {
+public class Species implements DatabaseManagement {
   public enum AnimalGroups {
     MAMMALS,
     BIRDS,
@@ -81,6 +81,7 @@ public class Species {
     }
   }
 
+  @Override
   public void save() {
     try (Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO species (name, classification, habitat, endangered) VALUES (:name, :classification, :habitat, :endangered);";
@@ -111,6 +112,7 @@ public class Species {
     }
   }
 
+  @Override
   public void delete() {
     try (Connection con = DB.sql2o.open()) {
       String sql = "DELETE FROM species WHERE id = :id;";

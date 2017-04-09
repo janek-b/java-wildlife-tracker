@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Animal {
+public class Animal implements DatabaseManagement{
   public enum Health {
     SICK,
     OKAY,
@@ -62,6 +62,7 @@ public class Animal {
     }
   }
 
+  @Override
   public void save() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO animals (speciesId, health, age, identifier) VALUES (:speciesId, :health, :age, :identifier);";
@@ -104,6 +105,7 @@ public class Animal {
     }
   }
 
+  @Override
   public void delete() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "DELETE FROM animals WHERE id=:id;";

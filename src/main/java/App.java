@@ -152,12 +152,38 @@ public class App {
       return render(model, layout);
     });
 
+    get("/users/:userId", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      User loggedInUser = request.session().attribute("user");
+      User userProfile = User.find(Integer.parseInt(request.params(":userId")));
+      try {
+        if (loggedInUser.equals(userProfile)) {
+          model.put("user", loggedInUser);
+          model.put("userProfile", userProfile);
+          model.put("template", "templates/user.vtl");
+        } else {
+          response.redirect("/");
+          // Change to Error page
+        }
+      } catch (NullPointerException exception) {
+        response.redirect("/");
+      }
+      return render(model, layout);
+    });
+
     post("/users/:userId/update", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
+      User loggedInUser = request.session().attribute("user");
       User user = User.find(Integer.parseInt(request.params(":userId")));
       String userName = request.queryParams("userName");
       String userEmail = request.queryParams("userEmail");
-      user.update(userEmail, userName);
+      if (loggedInUser.equals(user)) {
+        request.session().removeAttribute("user");
+        user.update(userEmail, userName);
+        request.session().attribute("user", User.find(user.getId()));
+      } else {
+        user.update(userEmail, userName);
+      }
       response.redirect(request.headers("Referer"));
       return render(model, layout);
     });
