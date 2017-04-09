@@ -3,14 +3,17 @@
     <div class="col-md-10 col-md-offset-1">
       #foreach($species in $speciesAll)
         <h4 class="pull-right">
-          <span class="label label-info">Sightings: $species.getSightingCount()</span>
-        #if($species.getEndangered())
-          <span class="label label-danger">Endangered</span>
-        #end
+          #if($species.getEndangered())
+            <span class="label label-danger">Endangered</span>
+          #end
         </h4>
         <h3 class="text-capitalize"><a href="/species/$species.getId()">$species.getName()</a></h3>
-        <!-- Add sighting count -->
-        <p>$species.getHabitat()</p>
+        <h4><span class="label label-success">Sightings: $species.getSightingCount()</span></h4>
+        <dl class="dl-horizontal">
+          <dt>Habitat:</dt>
+          <dd>$species.getHabitat()</dd>
+        </dl>
+        <!-- <p>$species.getHabitat()</p> -->
         <hr>
       #end
     </div>

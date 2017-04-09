@@ -11,13 +11,15 @@
               <h4 class="pull-right"><span class="label label-danger">Endangered</span></h4>
             #end
             <h3 class="text-center text-capitalize">$species.getName()</h3>
+            <h4 class="text-right"><a href="https://en.wikipedia.org/wiki/$species.getName()"><span class="label label-info">Wiki</span></a></h4>
+
             <hr>
             <dl class="dl-horizontal">
-              <dt><span class="label label-default">Group:</span></dt>
+              <dt>Group:</dt>
               <dd>$species.getClassification()</dd>
             </dl>
             <dl class="dl-horizontal">
-              <dt><span class="label label-default">Habitat:</span></dt>
+              <dt>Habitat:</dt>
               <dd>$species.getHabitat()</dd>
             </dl>
           </div>
