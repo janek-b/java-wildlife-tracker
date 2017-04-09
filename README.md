@@ -11,11 +11,16 @@ The Forest Service is considering a proposal from a timber company to clearcut a
 To create the necessary databases, launch postgres, then psql, and run the following commands:
 
 * `CREATE DATABASE wildlife_tracker;`
+* From the terminal run this command to import the database `psql < wildlife_tracker.sql`
+
+If for some reason that command fails, run the command below from psql to create the required tables in the database.
+
 * `\c wildlife_tracker;`
-* `CREATE TABLE species (id serial PRIMARY KEY, name varchar, classification varchar, bahitat varchar, endangered boolean);`
+* `CREATE TABLE species (id serial PRIMARY KEY, name varchar, classification varchar, hahitat varchar, endangered boolean, image varchar);`
 * `CREATE TABLE animals (id serial PRIMARY KEY, speciesId int, health varchar, age varchar, identifier varchar);`
-* `CREATE TABLE sightings (id serial PRIMARY KEY, speciesId int, location varchar, userId varchar, time timestamp);`
-* `CREATE TABLE users (id serial PRIMARY KEY, name varchar);`
+* `CREATE TABLE sightings (id serial PRIMARY KEY, speciesId int, location varchar, userId varchar, time timestamp, image varchar);`
+* `CREATE TABLE animals_sightings (id serial PRIMARY KEY, animalId int, speciesId int);`
+* `CREATE TABLE users (id serial PRIMARY KEY, email varchar, name varchar);`
 * `CREATE DATABASE wildlife_tracker_test WITH TEMPLATE wildlife_tracker;`
 
 ### License
