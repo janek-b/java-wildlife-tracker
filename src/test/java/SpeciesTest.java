@@ -90,10 +90,11 @@ public class SpeciesTest {
   public void update_updatesSpeciesPropertiesInDatabase_String() {
     Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
     testSpecies.save();
-    testSpecies.update("Buck", "Hills", true);
+    testSpecies.update("Buck", "Hills", true, "imageURL");
     assertEquals("Buck", Species.find(testSpecies.getId()).getName());
     assertEquals("Hills", Species.find(testSpecies.getId()).getHabitat());
     assertEquals(true, Species.find(testSpecies.getId()).getEndangered());
+    assertEquals("imageURL", Species.find(testSpecies.getId()).getImage());
   }
 
   @Test
@@ -148,6 +149,14 @@ public class SpeciesTest {
     testSighting3.save();
     assertTrue(Species.getMostSighted().get(0).equals(testSpecies1));
     assertTrue(Species.getMostSighted().get(1).equals(testSpecies2));
+  }
+
+  public void getImage_returnsImageURLCorrectly() {
+    Species testSpecies = new Species("Deer", "Mammal", "Forest", false);
+    testSpecies.save();
+    testSpecies.setImage("imageURL");
+    assertEquals("imageURL", testSpecies.getImage());
+    assertEquals("imageURL", Species.find(testSpecies.getId()).getImage());
   }
 
 }

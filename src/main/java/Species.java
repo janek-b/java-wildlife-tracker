@@ -23,6 +23,7 @@ public class Species {
   private String classification;
   private String habitat;
   private boolean endangered;
+  private String image;
 
   public Species(String name, String classification, String habitat, boolean endangered) {
     this.name = name;
@@ -49,6 +50,21 @@ public class Species {
 
   public int getId() {
     return this.id;
+  }
+
+  public String getImage() {
+    return this.image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE species SET image = :image WHERE id = :id;";
+      con.createQuery(sql)
+        .addParameter("image", image)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
   }
 
   @Override
@@ -104,13 +120,14 @@ public class Species {
     }
   }
 
-  public void update(String name, String habitat, boolean endangered) {
+  public void update(String name, String habitat, boolean endangered, String image) {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE species SET (name, habitat, endangered) = (:name, :habitat, :endangered) WHERE id = :id;";
+      String sql = "UPDATE species SET (name, habitat, endangered, image) = (:name, :habitat, :endangered, :image) WHERE id = :id;";
       con.createQuery(sql)
         .addParameter("name", name)
         .addParameter("habitat", habitat)
         .addParameter("endangered", endangered)
+        .addParameter("image", image)
         .addParameter("id", this.id)
         .executeUpdate();
     }
