@@ -160,4 +160,14 @@ public class Animal implements DatabaseManagement{
     }
   }
 
+  public static List<Animal> search(String input) {
+    String newInput = "%" + input + "%";
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM animals WHERE lower(identifier) LIKE lower(:newInput);";
+      return con.createQuery(sql)
+        .addParameter("newInput", newInput)
+        .executeAndFetch(Animal.class);
+    }
+  }
+
 }

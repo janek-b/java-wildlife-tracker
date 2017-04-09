@@ -163,6 +163,20 @@ public class AnimalTest {
     assertEquals(testSighting2, testAnimal.getLastSighted());
   }
 
+  public void search_returnsMatchingResultsBasedOnIdentifier() {
+    Species testSpecies = new Species("Wolverine", "Mammal", "Forest", true);
+    testSpecies.save();
+    Animal testAnimal1 = new Animal(testSpecies.getId(), Animal.Health.OKAY.toString(), Animal.Age.ADULT.toString(), "Tag on ear");
+    testAnimal1.save();
+    Animal testAnimal2 = new Animal(testSpecies.getId(), Animal.Health.SICK.toString(), Animal.Age.YOUNG.toString(), "Spot on ear");
+    testAnimal2.save();
+    Animal testAnimal3 = new Animal(testSpecies.getId(), Animal.Health.SICK.toString(), Animal.Age.YOUNG.toString(), "Spot on leg");
+    testAnimal3.save();
+    Animal[] animals = new Animal[] {testAnimal1, testAnimal2};
+    assertTrue(Animal.search("ear").containsAll(Arrays.asList(animals)));
+    assertFalse(Animal.search("ear").contains(testAnimal3));
+  }
+
   // @Test
   // public void find_returnsNullWhenNoAnimalFound_null() {
   //   assertTrue(Animal.find(999) == null);
