@@ -170,18 +170,18 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       User loggedInUser = request.session().attribute("user");
       User userProfile = User.find(Integer.parseInt(request.params(":userId")));
-      try {
-        if (loggedInUser.equals(userProfile)) {
-          model.put("user", loggedInUser);
-          model.put("userProfile", userProfile);
-          model.put("template", "templates/user.vtl");
-        } else {
-          response.redirect("/");
-          // Change to Error page
-        }
-      } catch (NullPointerException exception) {
-        response.redirect("/");
-      }
+      model.put("user", loggedInUser);
+      model.put("userProfile", userProfile);
+      model.put("template", "templates/user.vtl");
+      // try {
+      //   if (loggedInUser.equals(userProfile)) {
+      //   } else {
+      //     response.redirect("/");
+      //     // Change to Error page
+      //   }
+      // } catch (NullPointerException exception) {
+      //   response.redirect("/");
+      // }
       return render(model, layout);
     });
 

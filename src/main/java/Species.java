@@ -97,7 +97,7 @@ public class Species implements DatabaseManagement {
 
   public static List<Species> all() {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM species;";
+      String sql = "SELECT * FROM species ORDER BY name asc;";
       return con.createQuery(sql)
         .executeAndFetch(Species.class);
     }
@@ -182,7 +182,7 @@ public class Species implements DatabaseManagement {
 
   public static List<Species> getEndangeredSpecies() {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM species WHERE endangered = true;";
+      String sql = "SELECT * FROM species WHERE endangered = true ORDER BY name asc;";
       return con.createQuery(sql)
         .executeAndFetch(Species.class);
     }

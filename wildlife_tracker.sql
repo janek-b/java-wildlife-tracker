@@ -255,7 +255,8 @@ COPY animals (id, speciesid, health, age, identifier) FROM stdin;
 1	2	healthy	young	Tag # 9
 2	5	healthy	young	White spot on left side
 3	2	healthy	young	Tag # 7
-4	2	healthy	adult	Tag #10
+5	7	healthy	young	Fluffy face
+4	2	healthy	adult	Tag # 11
 \.
 
 
@@ -263,7 +264,7 @@ COPY animals (id, speciesid, health, age, identifier) FROM stdin;
 -- Name: animals_id_seq; Type: SEQUENCE SET; Schema: public; Owner: janek
 --
 
-SELECT pg_catalog.setval('animals_id_seq', 4, true);
+SELECT pg_catalog.setval('animals_id_seq', 5, true);
 
 
 --
@@ -275,6 +276,7 @@ COPY animals_sightings (id, animalid, sightingid) FROM stdin;
 2	2	5
 3	3	6
 4	4	7
+5	5	10
 \.
 
 
@@ -282,7 +284,7 @@ COPY animals_sightings (id, animalid, sightingid) FROM stdin;
 -- Name: animals_sightings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: janek
 --
 
-SELECT pg_catalog.setval('animals_sightings_id_seq', 4, true);
+SELECT pg_catalog.setval('animals_sightings_id_seq', 5, true);
 
 
 --
@@ -290,15 +292,16 @@ SELECT pg_catalog.setval('animals_sightings_id_seq', 4, true);
 --
 
 COPY sightings (id, speciesid, location, userid, "time", image) FROM stdin;
+7	2	In the Sky	1	2017-04-08 20:28:47.406348	http://birdsflight.com/wp-content/uploads/2012/04/California-Condor.jpg
+3	2	In a tree	1	2017-04-08 13:48:07.696281	http://ww2.kqed.org/quest/wp-content/uploads/sites/39/2014/10/Zion_NationalPark_CU_2_NPSPhoto-EricNewmark.jpg
+6	2	Near the lake	1	2017-04-08 18:40:09.120007	http://www.birdinginformation.com/wp-content/gallery/california-condor/california-condor-flying-16.jpg
+10	7	At the coast	1	2017-04-09 15:38:01.085671	http://cdn.c.photoshelter.com/img-get/I0000JoUGqueaZ6Q/s/600/600/B2A4566.jpg
 9	4	In the forest	1	2017-04-09 14:16:06.386202	http://a57.foxnews.com/media2.foxnews.com/BrightCove/694940094001/2016/06/13/0/0/694940094001_4938743070001_061316-do-bear-1280.jpg?ve=1
-8	4	By the river	1	2017-04-09 14:03:09.153892	/images/default-placeholder.png
-5	5	In the meadow.	1	2017-04-08 18:09:10.880737	/images/default-placeholder.png
-4	3	In the woods	1	2017-04-08 16:08:23.48201	/images/default-placeholder.png
-2	4	The Woods	1	2017-04-08 13:01:18.008406	/images/default-placeholder.png
-1	3	Near the river.	1	2017-04-07 14:24:09.61736	/images/default-placeholder.png
-3	2	In a tree	1	2017-04-08 13:48:07.696281	/images/default-placeholder.png
-6	2	Near the lake	1	2017-04-08 18:40:09.120007	/images/default-placeholder.png
-7	2	In the Sky	1	2017-04-08 20:28:47.406348	/images/default-placeholder.png
+8	4	By the river	1	2017-04-09 14:03:09.153892	http://www.montanaoutdoor.com/wp-content/uploads/2015/07/black-bear-standing.jpg
+5	5	In the meadow.	1	2017-04-08 18:09:10.880737	https://s-media-cache-ak0.pinimg.com/originals/31/00/29/3100296f3e3ce1e618460c06848c8950.jpg
+4	3	In the woods	1	2017-04-08 16:08:23.48201	http://living-wild.net/wp-content/uploads/2016/02/fox-yawning-1.jpg
+2	4	The Woods	1	2017-04-08 13:01:18.008406	http://static.boredpanda.com/blog/wp-content/uploads/2014/03/funny-bears-doing-human-things-34.jpg
+1	3	Near the river.	1	2017-04-07 14:24:09.61736	http://interesting-animal-facts.com/Images/Grey-Fox.JPG
 \.
 
 
@@ -306,7 +309,7 @@ COPY sightings (id, speciesid, location, userid, "time", image) FROM stdin;
 -- Name: sightings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: janek
 --
 
-SELECT pg_catalog.setval('sightings_id_seq', 9, true);
+SELECT pg_catalog.setval('sightings_id_seq', 10, true);
 
 
 --
@@ -314,15 +317,15 @@ SELECT pg_catalog.setval('sightings_id_seq', 9, true);
 --
 
 COPY species (id, name, classification, habitat, endangered, image) FROM stdin;
-1	Wolverine	Mammal	Open forests and alpine areas	t	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/Wolverine.jpg?itok=57Jza-i1
-6	Columbian White-tailed Deer	mammals	Willow, cottonwood and alder thickets along stream sides	t	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/ColumbianWhiteTailedDeer-FWS.jpg?itok=G3hhhF6Q
-4	Black Bear	Mammal	Forests with streams and wetlands.	f	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/BlackBear.jpg?itok=gFxwLQ2w
-3	Gray Fox	Mammal	heavily wooded swamps and rough hilly terrain	f	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/GrayFox.jpg?itok=kYvc4gDl
-5	Gray Wolf	Mammal	A variety of habitats—from grasslands, deserts and tundra to mountainous woodlands	t	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/fwswolf.gary_.kramer.jpg?itok=fDf46LQI
-2	California condor	Bird	Large swathes of land with tall trees, snags, or rocky cliffs for nesting and grasslands or oak savanna for foraging.	t	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/CaliforniaCondorUSFWS.jpg?itok=ACBosUfv
-8	Roosevelt Elk	mammals	Old growth forests with breaks in the canopy allowing sunlight to reach the floor	f	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/RooseveltElk.jpg?itok=jeBqE9DZ
 9	Sasquatch	mammals	Remote forests	f	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/SasquatchRogerPatterson.gif?itok=vFFc9sxC
 7	Sea Otter	mammals	Temperate, coastal waters with rocky or soft sediment bottom and kelp forests	t	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/SeaOtter.jpg?itok=6-EVVJGD
+1	Wolverine	mammals	Open forests and alpine areas	t	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/Wolverine.jpg?itok=57Jza-i1
+4	Black Bear	mammals	Forests with streams and wetlands.	f	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/BlackBear.jpg?itok=gFxwLQ2w
+2	California condor	birds	Large swathes of land with tall trees, snags, or rocky cliffs for nesting and grasslands or oak savanna for foraging.	t	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/CaliforniaCondorUSFWS.jpg?itok=ACBosUfv
+6	Columbian White-tailed Deer	mammals	Willow, cottonwood and alder thickets along stream sides	t	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/ColumbianWhiteTailedDeer-FWS.jpg?itok=G3hhhF6Q
+3	Gray Fox	mammals	Heavily wooded swamps and rough hilly terrain	f	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/GrayFox.jpg?itok=kYvc4gDl
+5	Gray Wolf	mammals	A variety of habitats—from grasslands, deserts and tundra to mountainous woodlands	t	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/fwswolf.gary_.kramer.jpg?itok=fDf46LQI
+8	Roosevelt Elk	mammals	Old growth forests with breaks in the canopy allowing sunlight to reach the floor	f	http://www.oregonwild.org/sites/default/files/styles/mid-thum-200x200/public/wildlife/RooseveltElk.jpg?itok=jeBqE9DZ
 \.
 
 

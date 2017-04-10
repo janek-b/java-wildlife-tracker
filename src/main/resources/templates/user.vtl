@@ -1,19 +1,21 @@
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
-      <div class="well">
-        <button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#userModal">Edit</button>
-        #if($userProfile.getName())
+      #if($userProfile.getId() == $user.getId())
+        <div class="well">
+          <button type="button" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#userModal">Edit</button>
+          #if($user.getName())
+            <dl class="dl-horizontal">
+              <dt>Name:</dt>
+              <dd>$user.getName()</dd>
+            </dl>
+          #end
           <dl class="dl-horizontal">
-            <dt>Name:</dt>
-            <dd>$userProfile.getName()</dd>
+            <dt>Email:</dt>
+            <dd>$user.getEmail()</dd>
           </dl>
-        #end
-        <dl class="dl-horizontal">
-          <dt>Email:</dt>
-          <dd>$userProfile.getEmail()</dd>
-        </dl>
-      </div>
+        </div>
+      #end
       <div class="well">
         <h4>Sightings</h4>
         <hr>

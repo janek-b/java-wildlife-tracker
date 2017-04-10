@@ -154,7 +154,7 @@ public class Animal implements DatabaseManagement{
 
   public static List<Map<String, Object>> getEndangeredSightings() {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "SELECT species.name, sightings.time, sightings.location, animals.health, animals.age, animals.identifier FROM sightings JOIN animals_sightings ON (sightings.id = animals_sightings.sightingId) JOIN animals ON (animals_sightings.animalId = animals.id) JOIN species ON (animals.speciesId = species.id) WHERE species.endangered = true;";
+      String sql = "SELECT species.name, sightings.time, sightings.location, animals.health, animals.age, animals.identifier FROM sightings JOIN animals_sightings ON (sightings.id = animals_sightings.sightingId) JOIN animals ON (animals_sightings.animalId = animals.id) JOIN species ON (animals.speciesId = species.id) WHERE species.endangered = true ORDER BY sightings.time desc;";
       return con.createQuery(sql)
         .executeAndFetchTable().asList();
     }

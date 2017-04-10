@@ -21,7 +21,7 @@
                 </tr>
                 #foreach($sighting in $recentSightings)
                   <tr>
-                    <td>$sighting.getSpeciesName()</td>
+                    <td><a href="/species/$sighting.getSpeciesId()" data-html="true" data-placement="bottom" data-toggle="tooltip" title='<img class="img-responsive img-rounded speciesImg" src="$sighting.getImage()">'>$sighting.getSpeciesName()</a></td>
                     <td>$sighting.getLocation()</td>
                     <td>$formatter.format($sighting.getTime())</td>
                   </tr>
@@ -48,7 +48,7 @@
                 </tr>
                 #foreach($species in $commonSpecies)
                   <tr>
-                    <td>$species.getName()</td>
+                    <td><a href="/species/$species.getId()" data-html="true" data-placement="bottom" data-toggle="tooltip" title='<img class="img-responsive img-rounded speciesImg" src="$species.getImage()">'>$species.getName()</a></td>
                     <td>$species.getSightingCount()</td>
                   </tr>
                 #end
