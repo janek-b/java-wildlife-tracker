@@ -4,6 +4,7 @@ import org.sql2o.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+import java.text.DateFormat;
 
 public class AnimalTest {
   @Rule
@@ -135,17 +136,17 @@ public class AnimalTest {
     testAnimal2.addSighting(testSighting2);
 
     assertEquals("Deer", Animal.getEndangeredSightings().get(0).get("name"));
-    assertEquals(Sighting.find(testSighting1.getId()).getTime(), Animal.getEndangeredSightings().get(0).get("time"));
+    assertEquals(DateFormat.getDateTimeInstance().format(Sighting.find(testSighting1.getId()).getTime()), DateFormat.getDateTimeInstance().format(Animal.getEndangeredSightings().get(0).get("time")));
     assertEquals("45.472428, -121.946466", Animal.getEndangeredSightings().get(0).get("location"));
-    assertEquals("OKAY", Animal.getEndangeredSightings().get(0).get("health"));
-    assertEquals("ADULT", Animal.getEndangeredSightings().get(0).get("age"));
-    assertEquals("Tag on ear", Animal.getEndangeredSightings().get(0).get("identifier"));
+    assertEquals("SICK", Animal.getEndangeredSightings().get(0).get("health"));
+    assertEquals("YOUNG", Animal.getEndangeredSightings().get(0).get("age"));
+    assertEquals("Spot on leg", Animal.getEndangeredSightings().get(0).get("identifier"));
     assertEquals("Deer", Animal.getEndangeredSightings().get(1).get("name"));
-    assertEquals(Sighting.find(testSighting2.getId()).getTime(), Animal.getEndangeredSightings().get(1).get("time"));
+    assertEquals(DateFormat.getDateTimeInstance().format(Sighting.find(testSighting2.getId()).getTime()), DateFormat.getDateTimeInstance().format(Animal.getEndangeredSightings().get(1).get("time")));
     assertEquals("45.472428, -121.946466", Animal.getEndangeredSightings().get(1).get("location"));
-    assertEquals("SICK", Animal.getEndangeredSightings().get(1).get("health"));
-    assertEquals("YOUNG", Animal.getEndangeredSightings().get(1).get("age"));
-    assertEquals("Spot on leg", Animal.getEndangeredSightings().get(1).get("identifier"));
+    assertEquals("OKAY", Animal.getEndangeredSightings().get(1).get("health"));
+    assertEquals("ADULT", Animal.getEndangeredSightings().get(1).get("age"));
+    assertEquals("Tag on ear", Animal.getEndangeredSightings().get(1).get("identifier"));
   }
 
   @Test

@@ -60,13 +60,13 @@ public class SpeciesTest {
   }
 
   @Test
-  public void all_returnsAllInstancesOfSpecies_false() {
+  public void all_returnsAllInstancesOfSpeciesInAlphabeticalOrder() {
     Species firstSpecies = new Species("Deer", "Mammal", "Forest", false);
     firstSpecies.save();
     Species secondSpecies = new Species("Black Bear", "Mammal", "Forest", false);
     secondSpecies.save();
-    assertEquals(true, Species.all().get(0).equals(firstSpecies));
-    assertEquals(true, Species.all().get(1).equals(secondSpecies));
+    assertEquals(true, Species.all().get(1).equals(firstSpecies));
+    assertEquals(true, Species.all().get(0).equals(secondSpecies));
   }
 
   @Test
